@@ -8,7 +8,6 @@
     overflow-wrap: anywhere;
   }
   html { scroll-padding-top: 7rem; }
-  section[id] { scroll-margin-top: 7rem; }
   :focus-visible { outline: 3px solid #4E665B; outline-offset: 4px; }
   footer :focus-visible { outline-color: #F4DFE3; }
   body:has(dialog[open]) { overflow: hidden; }
