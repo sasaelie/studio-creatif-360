@@ -1,0 +1,12 @@
+.footer { @apply bg-texte-fonce text-ivoire py-12 md:py-16; }
+.layout { @apply grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 lg:gap-12; }
+.brand { @apply min-w-0; }
+.brandTitle { @apply font-manuscrite text-3xl mb-4 text-rose-poudre; }
+.description { @apply text-gray-300 text-sm leading-relaxed; }
+.heading { @apply font-bold mb-4 uppercase tracking-wider text-sm text-rose-poudre; }
+.links { @apply space-y-2 text-sm text-gray-300; }
+.link { @apply hover:text-rose-poudre transition-colors; }
+.link { display: inline-block; padding-block: .5rem; }
+.contact { @apply space-y-2 text-sm text-gray-300; }
+.contact { overflow-wrap: anywhere; }
+.businessNumber { @apply pt-4 text-xs text-gray-300; }

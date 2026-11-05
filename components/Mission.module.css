@@ -1,0 +1,12 @@
+.section { @apply bg-ivoire; }
+.section { padding-block: clamp(3rem, 7vw, 6rem); }
+.layout { @apply grid md:grid-cols-2 gap-8 lg:gap-16 items-center; }
+.imageFrame { @apply relative rounded-2xl overflow-hidden shadow-xl; }
+.imageFrame { aspect-ratio: 1 / 1; max-height: 31.25rem; }
+.image { @apply object-cover; }
+.content { @apply space-y-6 min-w-0; }
+.description { @apply text-lg text-gray-700 leading-relaxed; }
+.benefits { @apply space-y-4 pt-4; }
+.benefit { @apply flex items-center gap-3 text-lg; }
+.check { @apply w-8 h-8 shrink-0 rounded-full bg-rose-poudre flex items-center justify-center text-sauge-fonce font-bold; }
+.title { font-size: clamp(2.25rem, 4vw, 3rem); line-height: 1.15; }

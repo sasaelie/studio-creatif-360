@@ -1,0 +1,10 @@
+.mobile { flex-shrink: 0; }
+.trigger, .close { @apply text-sauge-fonce border border-sauge-fonce rounded-full; padding: .625rem 1rem; min-height: 2.75rem; font-weight: 600; }
+.dialog { @apply bg-ivoire text-texte-fonce; padding: 0; width: min(28rem, calc(100% - 2rem)); max-height: calc(100dvh - 2rem); border: 0; border-radius: 1rem; margin: auto; overflow-y: auto; }
+.dialog::backdrop { background: rgb(0 0 0 / .45); }
+.panel { padding: 1.5rem; }
+.heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
+.heading h2 { font-size: 2rem; }
+.links { display: flex; flex-direction: column; gap: .5rem; margin-top: 1.5rem; }
+.links a { padding: .75rem 1rem; min-height: 2.75rem; }
+@media (min-width: 1024px) { .mobile { display: none; } }

@@ -1,4 +1,4 @@
-﻿/** @type {import('tailwindcss').Config} */
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,7 +10,7 @@ module.exports = {
         'rose-poudre': '#F4DFE3',
         'ivoire': '#FCFAF8',
         'sauge': '#8DA399',
-        'sauge-fonce': '#6B8278',
+        'sauge-fonce': '#4E665B',
         'texte-fonce': '#2D2A26',
       },
       fontFamily: {
