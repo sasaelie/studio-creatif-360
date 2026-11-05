@@ -25,7 +25,14 @@ npm audit
 npm run start
 ```
 
-`check` compile le site puis vérifie les types. Il ne remplace pas les tests
+`check` contrôle l'encodage des sources, compile le site puis vérifie les types.
+`npm run check:encoding` contrôle séparément les fichiers UTF-8 et recherche les
+séquences caractéristiques d'une conversion de caractères erronée. Le diagnostic
+indique le fichier, la ligne et le texte concerné ; il bloque la vérification si
+une anomalie est détectée. Cette recherche ciblée ne garantit pas de reconnaître
+toutes les formes possibles de texte corrompu.
+
+Ce contrôle ne remplace pas les tests
 dans un navigateur. Vérifier les largeurs 320, 390, 768, 1024 et 1440 px,
 le clavier, le zoom et les liens. Le téléchargement des polices Google nécessite
 un accès réseau lors de la compilation.
