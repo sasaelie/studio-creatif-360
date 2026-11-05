@@ -1,4 +1,21 @@
-.card { @apply rounded-2xl bg-white shadow-sm; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.card {
+  border-radius: 1rem;
+  background: #fff;
+  border: 1px solid rgb(255 255 255 / .9);
+  box-shadow: 0 12px 32px rgb(45 42 38 / .06), inset 0 1px 0 rgb(255 255 255 / .95);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+/* Le fond opaque reste utilisable si le navigateur ne prend pas en charge le flou. */
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .card {
+    background: rgb(255 255 255 / .78);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+}
 .imageFrame { position: relative; aspect-ratio: 4 / 3; overflow: hidden; }
 .image { object-fit: cover; transition: transform .3s; }
 .content { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; gap: .75rem; }
