@@ -1,4 +1,4 @@
-﻿import Link from 'next/link'
+import Link from 'next/link'
 import Image from 'next/image'
 
 export default function Hero() {
@@ -8,21 +8,21 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
         <div className="space-y-8 animate-fade-up">
           <span className="inline-block bg-rose-poudre text-sauge-fonce px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide">
-            ASBL Ã  Seraing
+            ASBL à Seraing
           </span>
           <h1 className="text-5xl md:text-7xl leading-tight">
-            Apprendre, crÃ©er, <br/>
+            Apprendre, créer, <br/>
             <span className="text-rose-poudre drop-shadow-sm">se rencontrer.</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-600 max-w-md">
-            Ateliers de couture et de crÃ©ation textile pour enfants et adultes, en petits groupes de 5.
+            Ateliers de couture et de création textile pour enfants et adultes, en petits groupes de 5.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Link href="/reservation" className="bg-sauge text-white text-center px-8 py-4 rounded-full hover:bg-sauge-fonce transition-all shadow-lg font-medium">
-              RÃ©server un atelier
+              Réserver un atelier
             </Link>
             <Link href="#mission" className="border border-sauge text-sauge text-center px-8 py-4 rounded-full hover:bg-sauge/10 transition-all font-medium">
-              DÃ©couvrir l'ASBL
+              Découvrir l'ASBL
             </Link>
           </div>
         </div>
