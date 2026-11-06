@@ -51,12 +51,16 @@ GitHub stocke le code ; GitHub Pages ne lance pas un serveur Next.js.
 Le site suppose un déploiement à la racine du domaine. Un sous-répertoire
 nécessite une configuration et une validation spécifiques des liens et images.
 
-Les pages réservation, cours, blog et informations légales sont implémentées.
+Les pages mission (`/notre-mission`), localisation (`/localisation`), catalogue
+(`/cours`), réservation, blog et informations légales sont implémentées.
 La demande d’atelier prépare un e-mail que le visiteur relit et envoie depuis sa
 messagerie ; aucune place n’est bloquée ni confirmée automatiquement. Les cours
 présentent les thèmes et les tarifs existants, puis proposent de contacter l’ASBL.
 Aucune vidéo payante, aucun compte et aucun paiement ne sont simulés.
-Les disponibilités affichées sont des données statiques et indicatives.
+Les quatre créneaux et tarifs d’atelier proviennent des renseignements fournis
+par l’association : 20 € pour les enfants, 30 € pour les adultes. Le site indique
+une capacité de cinq participants, sans inventer de compteur de places restantes.
+La date et la disponibilité doivent être confirmées par l’association.
 
 ## Organisation
 
@@ -72,7 +76,10 @@ Les disponibilités affichées sont des données statiques et indicatives.
 
 Les composants gardent le JSX, les fichiers `.module.css` portent leurs styles,
 et les données sont séparées. Les imports CSS sont locaux aux composants.
-La couleur sauge foncé assure la lisibilité des boutons ; le sauge clair reste décoratif.
+Le fond est ivoire et rose poudré. Le vert foncé sert aux boutons et à certains
+titres, sans nappe verte dans le décor. La mission et son illustration partagent
+un panneau. L’accueil n’affiche pas le catalogue ou les articles : un accès unique
+conduit à chaque page dédiée, où les entrées sont séparées par de simples lignes.
 
 `GlassSurface.module.css` centralise la transparence (32 % de blanc), le flou,
 les bordures et les ombres des panneaux. Un fond opaque est conservé pour les
@@ -80,8 +87,15 @@ navigateurs qui ne prennent pas en charge le flou. Les images originales sont
 affichées entières avec `object-fit: contain` et s’ouvrent en grand ; leur contenu
 n’a pas été retouché. La typographie manuscrite est réservée aux grands titres.
 
-Les informations légales reprennent les coordonnées présentes dans le code
-initial. L’association doit maintenir ces renseignements à jour et préciser ses
+`data/site.ts` centralise l’adresse confirmée par l’association : Rue Sous les
+Vignes 8, boîte 1, 4100 Seraing, Belgique. `data/about.ts` contient la mission et
+la présentation d’Alyssia Wilkins ; `data/faq.ts` reprend les réponses fréquentes.
+Les métadonnées, les URL canoniques, le sitemap et les données structurées de
+l’association relient ces pages. Aucun classement dans Google n’est garanti.
+
+Les mentions légales indiquent la publication aux Annexes du Moniteur belge du
+21 août 2026, d’après les renseignements fournis. L’association doit maintenir
+ces renseignements à jour et préciser ses
 modalités de conservation des correspondances. Le code n’ajoute pas de traceur
 publicitaire, de stockage des champs ni d’envoi de formulaire côté serveur.
 

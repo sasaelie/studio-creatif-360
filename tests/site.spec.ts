@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-const paths = ['/', '/reservation', '/cours/machine', '/cours/tissu', '/cours/patron', '/blog', '/blog/chouchou', '/blog/materiel', '/mentions-legales', '/rgpd']
+const paths = ['/', '/notre-mission', '/localisation', '/reservation', '/cours', '/cours/machine', '/cours/tissu', '/cours/patron', '/blog', '/blog/chouchou', '/blog/materiel', '/mentions-legales', '/rgpd']
 const corruptedText = /\u00C3[\u0080-\u00BF]|\u00C2[\u0080-\u00BF]|\u00E2[\u0080-\u00BF\u20AC\u2010-\u2027]|\uFFFD/
 
 test('les liens principaux aboutissent à des pages et les inconnus à une 404', async ({ request }) => {
@@ -85,7 +85,7 @@ test('une demande sélectionne le bon atelier et prépare un e-mail sans confirm
 
 test('les cartes et les panneaux utilisent un verre dépoli cohérent', async ({ page }) => {
   await page.goto('/')
-  for (const selector of ['body > header', '#programme article', '#cours article', '#blog article', 'footer > div']) {
+  for (const selector of ['body > header', '#mission > div > div', '#programme article', '#cours > div > div', '#blog > div > div', 'footer > div']) {
     const style = await page.locator(selector).first().evaluate(element => {
       const computed = getComputedStyle(element)
       return { background: computed.backgroundColor, blur: computed.backdropFilter, shadow: computed.boxShadow }
@@ -94,12 +94,14 @@ test('les cartes et les panneaux utilisent un verre dépoli cohérent', async ({
     expect(style.blur).not.toBe('none')
     expect(style.shadow).not.toBe('none')
   }
-  await page.setViewportSize({ width: 768, height: 1024 })
-  const centered = await page.locator('#cours article').last().evaluate(element => {
-    const box = element.getBoundingClientRect()
-    return Math.abs(box.x + box.width / 2 - innerWidth / 2) < 1
-  })
-  expect(centered).toBe(true)
+  await expect(page.locator('#cours article, #blog article')).toHaveCount(0)
+  await page.locator('#cours').getByRole('link', { name: 'Découvrir les cours', exact: true }).click()
+  await expect(page).toHaveURL(/\/cours$/)
+  await expect(page.getByRole('article')).toHaveCount(3)
+  await page.goto('/')
+  await page.getByRole('link', { name: 'Tous les articles', exact: true }).click()
+  await expect(page).toHaveURL(/\/blog$/)
+  await expect(page.getByRole('article')).toHaveCount(2)
 })
 
 test('texte agrandi, réduction des animations et repli en cas d’image indisponible', async ({ page }) => {
@@ -116,7 +118,62 @@ test('texte agrandi, réduction des animations et repli en cas d’image indispo
     if (route.request().url().includes('cours-tissu')) return route.abort()
     return route.continue()
   })
-  await page.goto('/')
-  await page.locator('#cours').scrollIntoViewIfNeeded()
+  await page.goto('/cours')
   await expect(page.getByText('Visuel indisponible', { exact: true })).toBeVisible()
+})
+
+test('les informations confirmées sont cohérentes entre les horaires, la FAQ et les pages', async ({ page }) => {
+  await page.goto('/')
+  const sessions = page.locator('#programme article')
+  await expect(sessions).toHaveCount(4)
+  await expect(sessions.filter({ hasText: 'Enfants' })).toHaveCount(2)
+  await expect(sessions.filter({ hasText: 'Adultes' })).toHaveCount(2)
+  for (const session of await sessions.all()) {
+    const text = await session.innerText()
+    expect(text).toContain(text.includes('Enfants') ? '20 €' : '30 €')
+    expect(text).toContain('5 participants')
+    expect(text).not.toMatch(/places?\s+sur/)
+  }
+  await expect(page.locator('#programme')).not.toContainText('Vendredi')
+  await page.getByText('Combien coûte un cours de couture ?', { exact: true }).click()
+  await expect(page.locator('#questions details[open]')).toContainText('30 €')
+  await page.goto('/notre-mission')
+  await expect(page.locator('main')).toContainText('Alyssia Wilkins')
+  await expect(page.locator('main')).toContainText('trois générations')
+  await expect(page.locator('main')).toContainText('pas encore des propositions')
+  for (const path of ['/localisation', '/mentions-legales', '/rgpd']) {
+    await page.goto(path)
+    await expect(page.locator('main')).toContainText('Rue Sous les Vignes 8, boîte 1')
+    await expect(page.locator('main')).toContainText('4100 Seraing')
+    await expect(page.locator('body')).not.toContainText('Bois de Mont')
+  }
+  await page.goto('/mentions-legales')
+  await expect(page.locator('main')).toContainText('21 août 2026')
+  await page.goto('/reservation?atelier=vendredi-enfants')
+  await expect(page.getByLabel('Atelier souhaité')).toHaveValue('conseil')
+  await expect(page.getByLabel('Atelier souhaité').locator('option')).toHaveCount(5)
+})
+
+test('les pages dédiées ont leurs métadonnées et une localisation structurée cohérente', async ({ page, request }) => {
+  const sitemap = await (await request.get('/sitemap.xml')).text()
+  const titles: string[] = []
+  for (const path of ['/', '/notre-mission', '/localisation', '/cours', '/blog']) {
+    await page.goto(path)
+    const title = await page.title()
+    expect(titles).not.toContain(title)
+    titles.push(title)
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /.{50,}/)
+    const canonical = page.locator('link[rel="canonical"]')
+    await expect(canonical).toHaveCount(1)
+    expect(new URL((await canonical.getAttribute('href'))!).href).toBe(new URL(path, 'https://studio-creatif-360.vercel.app').href)
+    expect(sitemap).toContain('https://studio-creatif-360.vercel.app' + path)
+    const organization = JSON.parse(await page.locator('script[type="application/ld+json"]').innerText())
+    expect(organization.name).toBe('StudioCreatif360 ASBL')
+    expect(organization.address.streetAddress).toBe('Rue Sous les Vignes 8, boîte 1')
+    expect(organization.address.postalCode).toBe('4100')
+  }
+  await page.goto('/localisation')
+  const maps = new URL((await page.getByRole('link', { name: 'Préparer mon itinéraire dans Google Maps' }).getAttribute('href'))!)
+  expect(maps.hostname).toBe('www.google.com')
+  expect(maps.searchParams.get('destination')).toContain('Rue Sous les Vignes 8, boîte 1, 4100 Seraing')
 })
