@@ -4,7 +4,9 @@
 .illustration { min-width: 0; }
 .copy { min-width: 0; align-self: center; }
 .copy h2 { margin-top: 0; }
-.copy h2 a:hover { text-decoration: underline; text-underline-offset: .15em; }
+.titleLink { text-decoration: none; color: #354e42; }
+.titleLink:hover { color: #263e33; }
 .copy p + a { margin-top: 1rem; }
 .label { font-size: .8rem; color: #65534f; }
+.badge { display: inline-block; width: fit-content; background: #e6ede4; color: #354e42; border-radius: 999px; padding: .2rem .7rem; font-size: .8rem; font-weight: 600; margin-bottom: .6rem; }
 @media (min-width: 768px) { .item { grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 2rem; } }

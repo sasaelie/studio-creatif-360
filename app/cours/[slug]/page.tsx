@@ -18,7 +18,7 @@ export default async function CoursePage({ params }: Props) {
   const { slug } = await params
   const course = courses.find(item => item.id === slug)
   if (!course) notFound()
-  return <ContentPage title={course.title} description={course.description} backHref="/cours" backLabel="Tous les cours en ligne">
+  return <ContentPage illustrated title={course.title} description={course.description} backHref="/cours" backLabel="Tous les cours en ligne">
     <h2>Ce que nous allons explorer</h2>
     <ul>{course.topics.map(topic => <li key={topic}>{topic}</li>)}</ul>
     <h2>Disponibilité et renseignements</h2>

@@ -18,7 +18,7 @@ export default async function ArticlePage({ params }: Props) {
   const { slug } = await params
   const article = articles.find(item => item.id === slug)
   if (!article) notFound()
-  return <ContentPage title={article.title} description={article.excerpt} backHref="/blog" backLabel="Tous les articles">
+  return <ContentPage illustrated title={article.title} description={article.excerpt} backHref="/blog" backLabel="Tous les articles">
     {article.sections.map(section => <section key={section.title}>
       <h2>{section.title}</h2>
       {section.paragraphs?.map(paragraph => <p key={paragraph}>{paragraph}</p>)}

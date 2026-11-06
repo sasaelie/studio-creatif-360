@@ -12,12 +12,12 @@ export const metadata = {
 }
 
 export default function CoursesPage() {
-  return <ContentPage title="Cours de couture en ligne" description={about.online} backHref="/#cours" backLabel="Retour à l’accueil">
+  return <ContentPage illustrated title="Cours de couture en ligne" description={about.online} backHref="/#cours" backLabel="Retour à l’accueil">
     <div className={styles.list}>
       {courses.map(course => <article key={course.id} className={styles.item}>
         <div className={styles.illustration}><Illustration src={course.image} alt={course.imageAlt} sizes="(min-width: 768px) 224px, 85vw" /></div>
         <div className={styles.copy}>
-          <h2><Link href={course.href}>{course.title}</Link></h2>
+          <h2><Link className={styles.titleLink} href={course.href}>{course.title}</Link></h2>
           <p>{course.description}</p>
           <p className={styles.label}>Tarif indicatif : {course.price} €. Modalités à demander par e-mail.</p>
           <Link href={course.href} className="button-secondary">Découvrir ce cours</Link>
