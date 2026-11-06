@@ -4,14 +4,15 @@ import { reservationHref } from '@/data/navigation'
 import Container from './ui/Container'
 import SectionHeading from './ui/SectionHeading'
 import styles from './Programs.module.css'
+import { site } from '@/data/site'
 
 export default function Programs() {
   return (
     <section id="programme" className={styles.section}>
       <Container narrow>
         <div className={styles.heading}>
-          <SectionHeading title="Programme & Tarifs" description="Cinq créneaux par semaine, 36 semaines par an." />
-          <p className={styles.availabilityNote}>Disponibilités indicatives, à confirmer lors de la réservation.</p>
+          <SectionHeading title="Horaires et tarifs des cours à Seraing" description={`${site.groupCapacity} participants maximum par séance, pour les enfants et les adultes débutants.`} />
+          <p className={styles.availabilityNote}>Prix par séance. Contactez-nous pour confirmer une place avant de venir.</p>
         </div>
         <div className={styles.list}>
           {programs.map(prog => (
@@ -28,7 +29,7 @@ export default function Programs() {
                   <span className={styles.price}>{prog.price} €</span>
                   <span className={styles.priceLabel}>par séance</span>
                 </div>
-                <p className={styles.availability}>{prog.places} place{prog.places > 1 ? "s" : ""}<br />sur 5</p>
+                <p className={styles.availability}>{site.groupCapacity} participants<br />maximum</p>
                 <Link href={`${reservationHref}?atelier=${prog.id}`} className={styles.reserve} aria-label={`Demander l’atelier ${prog.day.toLowerCase()} ${prog.audience.toLowerCase()} à ${prog.schedule}`}>
                   Demander
                 </Link>
