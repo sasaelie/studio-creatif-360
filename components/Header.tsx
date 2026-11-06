@@ -5,7 +5,7 @@ import Container from './ui/Container'
 import MobileMenu from './navigation/MobileMenu'
 import styles from './Header.module.css'
 import Link from 'next/link'
-import Image from 'next/image'
+import Brand from './ui/Brand'
 
 export default function Header() {
   const scrolled = useScrolled()
@@ -13,8 +13,8 @@ export default function Header() {
   return (
     <header className={[styles.header, scrolled ? styles.scrolled : ""].join(" ")}>
       <Container className={styles.layout}>
-        <Link href="/" className={styles.logo}>
-          <Image src="/logo-noir.png" alt="StudioCreatif360" fill className={styles.image} sizes="224px" />
+        <Link href="/" className={styles.logo} aria-label="Studio Créatif 360 — accueil">
+          <Brand />
         </Link>
         <nav aria-label="Navigation principale" className={styles.navigation}>
           {navigation.map(item => <Link key={item.href} href={item.href}>{item.label}</Link>)}

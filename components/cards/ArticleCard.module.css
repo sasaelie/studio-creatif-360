@@ -1,6 +1,8 @@
-.card { min-width: 0; }
-.imageFrame { position: relative; aspect-ratio: 2 / 1; overflow: hidden; border-radius: 1rem; margin-bottom: 1.5rem; }
-.image { object-fit: cover; }
-.category { @apply text-sauge-fonce; font-size: .875rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
-.card h3 { font-size: 1.75rem; line-height: 1.2; margin-top: .5rem; }
-.card p { @apply text-gray-600; margin-top: .75rem; }
+.card { composes: panel from '../ui/GlassSurface.module.css'; overflow: hidden; min-width: 0; display: flex; flex-direction: column; }
+.imageFrame { overflow: hidden; }
+.content { padding: 1.2rem; display: flex; flex-direction: column; flex: 1; gap: .65rem; }
+.category { color: #354e42; font-size: .7rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+.content h3 { font-size: 1.2rem; line-height: 1.35; font-weight: 700; }
+.content h3 a:hover { text-decoration: underline; text-underline-offset: .2em; }
+.content p { color: #43524a; font-size: .9rem; }
+.link { color: #354e42; display: inline-flex; align-items: center; min-height: 2.75rem; font-size: .85rem; font-weight: 700; text-decoration: underline; text-underline-offset: .2em; margin-top: auto; }

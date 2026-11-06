@@ -11,7 +11,7 @@ export default function Blog() {
       <Container>
         <div className={styles.heading}>
           <SectionHeading title="Le blog" description="Astuces et tutoriels pour aller plus loin." />
-          <Link prefetch={false} href="/blog" className="button-secondary">Tous les articles</Link>
+          <Link href="/blog" className="button-secondary">Tous les articles</Link>
         </div>
         <div className={styles.grid}>
           {articles.map(item => <ArticleCard key={item.id} article={item} />)}

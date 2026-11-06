@@ -1,12 +1,11 @@
-.section { @apply bg-ivoire; }
-.section { padding-block: clamp(3rem, 7vw, 6rem); }
-.layout { @apply grid md:grid-cols-2 gap-8 lg:gap-16 items-center; }
-.imageFrame { @apply relative rounded-2xl overflow-hidden shadow-xl; }
-.imageFrame { aspect-ratio: 1 / 1; max-height: 31.25rem; }
-.image { @apply object-cover; }
-.content { @apply space-y-6 min-w-0; }
-.description { @apply text-lg text-gray-700 leading-relaxed; }
-.benefits { @apply space-y-4 pt-4; }
-.benefit { @apply flex items-center gap-3 text-lg; }
-.check { @apply w-8 h-8 shrink-0 rounded-full bg-rose-poudre flex items-center justify-center text-sauge-fonce font-bold; }
+.section { padding-block: clamp(2rem, 5vw, 4rem); }
+.layout { display: grid; gap: 1.5rem; align-items: center; }
+.imageFrame { composes: panel from './ui/GlassSurface.module.css'; overflow: hidden; width: 100%; max-width: 30rem; margin-inline: auto; }
+.content { composes: panel from './ui/GlassSurface.module.css'; min-width: 0; order: -1; padding: clamp(1.25rem, 3vw, 2rem); }
+.content > * + * { margin-top: 1rem; }
 .title { font-size: clamp(2.25rem, 4vw, 3rem); line-height: 1.15; }
+.description { color: #3c4a42; font-size: 1rem; }
+.benefits { display: grid; gap: .75rem; padding-top: .25rem; }
+.benefit { display: flex; align-items: center; gap: .75rem; }
+.check { flex: 0 0 auto; display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 50%; background: rgb(255 255 255 / .5); color: #354e42; font-weight: 700; }
+@media (min-width: 768px) { .layout { grid-template-columns: .85fr 1.15fr; gap: 2rem; } .content { order: 0; } }

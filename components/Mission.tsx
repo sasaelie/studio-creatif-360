@@ -1,13 +1,13 @@
 import Container from './ui/Container'
 import styles from './Mission.module.css'
-import Image from 'next/image'
+import Illustration from './ui/Illustration'
 
 export default function Mission() {
   return (
     <section id="mission" className={styles.section}>
       <Container className={styles.layout}>
         <div className={styles.imageFrame}>
-          <Image src="/mission-image.jpg" alt="Notre mission" fill className={styles.image} sizes="(min-width: 1280px) 600px, (min-width: 768px) 45vw, 95vw" />
+          <Illustration src="/mission-image.jpg" alt="Affiche de conseils pour débuter la couture" large />
         </div>
         <div className={styles.content}>
           <h2 className={styles.title}>Notre mission</h2>

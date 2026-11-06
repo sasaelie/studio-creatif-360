@@ -15,7 +15,7 @@ export default function Programs() {
         </div>
         <div className={styles.list}>
           {programs.map(prog => (
-            <div key={prog.id} className={styles.program}>
+            <article key={prog.id} className={styles.program}>
               <div className={styles.details}>
                 <div className={styles.dayAudience}>
                   <span className={styles.day}>{prog.day}</span>
@@ -29,11 +29,11 @@ export default function Programs() {
                   <span className={styles.priceLabel}>par séance</span>
                 </div>
                 <p className={styles.availability}>{prog.places} place{prog.places > 1 ? "s" : ""}<br />sur 5</p>
-                <Link prefetch={false} href={reservationHref} className={styles.reserve}>
-                  Réserver
+                <Link href={`${reservationHref}?atelier=${prog.id}`} className={styles.reserve} aria-label={`Demander l’atelier ${prog.day.toLowerCase()} ${prog.audience.toLowerCase()} à ${prog.schedule}`}>
+                  Demander
                 </Link>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </Container>
