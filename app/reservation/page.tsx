@@ -4,7 +4,7 @@ import ReservationRequestForm from '@/components/reservation/ReservationRequestF
 import { programs } from '@/data/programs'
 import { site } from '@/data/site'
 
-export const metadata = { title: 'Demander un atelier' }
+export const metadata = { title: 'Demander un cours de couture à Seraing', description: 'Préparez votre demande par e-mail pour un cours de couture débutant à Seraing : enfants et adultes, 5 participants maximum par séance.', alternates: { canonical: '/reservation' } }
 
 export default async function ReservationPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const query = await searchParams

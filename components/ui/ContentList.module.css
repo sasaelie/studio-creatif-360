@@ -1,0 +1,10 @@
+.list { display: grid; gap: 2rem; }
+.item { display: grid; gap: 1.25rem; min-width: 0; }
+.item + .item { border-top: 1px solid rgb(113 87 82 / .2); padding-top: 2rem; }
+.illustration { min-width: 0; }
+.copy { min-width: 0; align-self: center; }
+.copy h2 { margin-top: 0; }
+.copy h2 a:hover { text-decoration: underline; text-underline-offset: .15em; }
+.copy p + a { margin-top: 1rem; }
+.label { font-size: .8rem; color: #65534f; }
+@media (min-width: 768px) { .item { grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: 2rem; } }

@@ -11,7 +11,7 @@ export function generateStaticParams() { return articles.map(article => ({ slug:
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params
   const article = articles.find(item => item.id === slug)
-  return { title: article?.title ?? 'Article introuvable', description: article?.excerpt }
+  return { title: article?.title ?? 'Article introuvable', description: article?.excerpt, alternates: article ? { canonical: '/blog/' + article.id } : undefined }
 }
 
 export default async function ArticlePage({ params }: Props) {

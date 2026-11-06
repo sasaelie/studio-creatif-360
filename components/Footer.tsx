@@ -27,6 +27,7 @@ export default function Footer() {
           <h4 className={styles.heading}>Contact</h4>
           <ul className={styles.contact}>
             {site.address.map(line => <li key={line}>{line}</li>)}
+            <li><Link href="/localisation" className={styles.link}>Adresse et itinéraire</Link></li>
             <li><a href={`mailto:${site.email}`} className={styles.link}>{site.email}</a></li>
           </ul>
         </div>
