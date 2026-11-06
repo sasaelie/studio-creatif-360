@@ -1,0 +1,5 @@
+.panel { composes: panel from './GlassSurface.module.css'; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.25rem 2rem; padding: clamp(1.25rem, 3vw, 2rem); }
+.copy { flex: 1 1 20rem; min-width: 0; }
+.copy h2 { font-size: clamp(2.1rem, 4vw, 2.75rem); line-height: 1.15; }
+.copy h2 a:hover { text-decoration: underline; text-underline-offset: .12em; }
+.copy p { max-width: 44rem; margin-top: .65rem; color: #514841; }

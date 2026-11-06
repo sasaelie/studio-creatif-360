@@ -1,0 +1,12 @@
+.form { display: grid; gap: 1rem; margin-top: 1.5rem; }
+.fields { display: grid; gap: 1rem; }
+.form label { display: grid; gap: .4rem; min-width: 0; font-size: .9rem; font-weight: 600; }
+.form input, .form select, .form textarea { width: 100%; min-width: 0; padding: .8rem; border: 1px solid rgb(53 78 66 / .3); border-radius: .75rem; color: #263e33; background: rgb(255 255 255 / .65); font-size: 1rem; font-weight: 400; }
+.form select { white-space: normal; }
+.form textarea { resize: vertical; }
+.form button { justify-self: start; }
+.note { color: #43524a; font-size: .85rem; }
+.prepared { composes: panel from '../ui/GlassSurface.module.css'; padding: 1.25rem; }
+.prepared > * + * { margin-top: .75rem; }
+.prepared a:not([class]) { text-decoration: underline; text-underline-offset: .2em; }
+@media (min-width: 640px) { .fields { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

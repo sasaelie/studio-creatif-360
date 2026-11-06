@@ -1,0 +1,19 @@
+.page { padding-block: max(10rem, calc(var(--site-header-height, 4.5rem) + 2rem)) 3rem; }
+.back { display: inline-flex; align-items: center; min-height: 2.75rem; font-size: .9rem; font-weight: 600; color: #354e42; text-decoration: underline; text-underline-offset: .2em; }
+.heading { padding-block: 1rem 1.5rem; max-width: 48rem; }
+.heading h1 { font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.1; }
+.heading > p { margin-top: 1rem; font-size: 1.1rem; color: #43524a; }
+.content { composes: panel from './GlassSurface.module.css'; padding: clamp(1.25rem, 4vw, 2.5rem); }
+.illustrated { background: rgb(var(--studio-off-white-rgb) / .48); padding: 1rem; }
+.content h2 { font-size: clamp(1.8rem, 4vw, 2.4rem); line-height: 1.2; margin-block: 1.75rem .75rem; }
+.content h2:first-child { margin-top: 0; }
+.content h3 { font-size: 1.15rem; font-weight: 700; margin-block: 1rem .5rem; }
+.content p { line-height: 1.7; }
+.content p + p { margin-top: .75rem; }
+.content ul, .content ol { padding-left: 1.25rem; margin-block: .75rem 1.25rem; }
+.content ul { list-style: disc; }
+.content ol { list-style: decimal; }
+.content li + li { margin-top: .5rem; }
+.content a:not([class]) { color: #354e42; text-decoration: underline; text-underline-offset: .2em; }
+.content > a { margin-top: 1rem; }
+.content > figure { max-width: 30rem; margin: 1.5rem auto; }

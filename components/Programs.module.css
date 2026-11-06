@@ -1,19 +1,18 @@
-.section { @apply bg-rose-poudre/20; padding-block: clamp(3rem, 7vw, 6rem); }
-.heading { text-align: center; margin-bottom: 3rem; }
-.availabilityNote { @apply text-gray-600; font-size: .875rem; margin-top: 1rem; }
-.list { display: grid; gap: 1rem; }
-.program { @apply bg-ivoire rounded-2xl shadow-sm border border-rose-poudre/50; display: flex; flex-direction: column; padding: clamp(1rem, 3vw, 1.5rem); gap: 1.5rem; min-width: 0; }
+.section { padding-block: clamp(2rem, 5vw, 4rem); }
+.heading { text-align: center; margin-bottom: 1.5rem; }
+.availabilityNote { color: #43524a; font-size: .8rem; margin-top: .75rem; }
+.list { display: grid; gap: .8rem; }
+.program { composes: panel from './ui/GlassSurface.module.css'; display: flex; flex-direction: column; padding: 1rem; gap: .65rem; min-width: 0; border-radius: 1.1rem; }
 .details { flex: 1; min-width: 0; }
-.dayAudience { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-bottom: .5rem; }
-.day { font-size: 1.25rem; font-weight: 700; }
-.audience { @apply bg-sauge/10 text-sauge-fonce rounded-full; padding: .25rem .75rem; font-size: .875rem; font-weight: 500; }
-.schedule, .priceLabel { @apply text-gray-600; }
-.actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: center; }
-.price { display: block; font-weight: 700; font-size: 1.125rem; }
-.priceBlock { min-width: 0; }
-.priceLabel, .availability { font-size: .875rem; }
-.availability { text-align: right; }
-.reserve { @apply bg-sauge-fonce text-white rounded-full; display: block; padding: .75rem 1.5rem; text-align: center; font-weight: 500; grid-column: 1 / -1; }
-.reserve:hover { @apply bg-texte-fonce; }
-@media (min-width: 640px) { .actions { grid-template-columns: auto auto auto; gap: 1.5rem; } .reserve { grid-column: auto; } }
-@media (min-width: 768px) { .program { flex-direction: row; align-items: center; justify-content: space-between; } }
+.dayAudience { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; }
+.day { font-size: 1rem; font-weight: 700; }
+.audience { background: rgb(255 255 255 / .48); color: #354e42; border: 1px solid rgb(255 255 255 / .7); padding: .15rem .6rem; border-radius: 2rem; font-size: .75rem; }
+.schedule { color: #43524a; font-size: .85rem; margin-top: .2rem; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; }
+.priceBlock { flex: 1 1 auto; min-width: 0; }
+.price { display: block; font-weight: 700; font-size: 1rem; }
+.priceLabel { display: block; color: #43524a; font-size: .7rem; }
+.availability { flex: 1 1 auto; text-align: center; font-size: .75rem; }
+.reserve { flex: 0 1 auto; background: #4E665B; color: white; border-radius: 2rem; padding: .65rem 1rem; min-height: 2.75rem; display: inline-flex; align-items: center; justify-content: center; font-size: .85rem; font-weight: 600; }
+.reserve:hover { background: #354e42; }
+@media (min-width: 768px) { .program { flex-direction: row; align-items: center; gap: 1.5rem; padding: 1rem 1.5rem; } .actions { gap: 1.5rem; } }

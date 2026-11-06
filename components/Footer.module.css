@@ -1,12 +1,14 @@
-.footer { @apply bg-texte-fonce text-ivoire py-12 md:py-16; }
-.layout { @apply grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 lg:gap-12; }
-.brand { @apply min-w-0; }
-.brandTitle { @apply font-manuscrite text-3xl mb-4 text-rose-poudre; }
-.description { @apply text-gray-300 text-sm leading-relaxed; }
-.heading { @apply font-bold mb-4 uppercase tracking-wider text-sm text-rose-poudre; }
-.links { @apply space-y-2 text-sm text-gray-300; }
-.link { @apply hover:text-rose-poudre transition-colors; }
-.link { display: inline-block; padding-block: .5rem; }
-.contact { @apply space-y-2 text-sm text-gray-300; }
+.footer { padding: 1.5rem 1rem; }
+.layout { composes: panel from './ui/GlassSurface.module.css'; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; padding: 1.25rem; }
+.brand { grid-column: 1 / -1; min-width: 0; }
+.description { color: #43524a; font-size: .8rem; line-height: 1.6; margin-top: .65rem; }
+.heading { font-size: .75rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; margin-bottom: .35rem; }
+.links, .contact { color: #3c4a42; font-size: .8rem; }
 .contact { overflow-wrap: anywhere; }
-.businessNumber { @apply pt-4 text-xs text-gray-300; }
+.contact li + li { margin-top: .4rem; }
+.link { display: inline-flex; align-items: center; min-height: 2.75rem; }
+.link:hover { text-decoration: underline; text-underline-offset: .2em; }
+.legal { grid-column: 1 / -1; border-top: 1px solid rgb(255 255 255 / .7); padding-top: .5rem; }
+.legal .links { display: flex; flex-wrap: wrap; gap: .25rem 1rem; align-items: center; }
+.businessNumber { font-size: .7rem; }
+@media (min-width: 900px) { .layout { grid-template-columns: 1.25fr 1fr 1fr 1fr; padding: 1.5rem; gap: 1.5rem; } .brand, .legal { grid-column: auto; } .legal { border-top: 0; padding-top: 0; } .legal .links { display: block; } }

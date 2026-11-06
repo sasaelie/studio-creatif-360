@@ -2,36 +2,28 @@ import { reservationHref } from '@/data/navigation'
 import Container from './ui/Container'
 import styles from './Hero.module.css'
 import Link from 'next/link'
-import Image from 'next/image'
+import { about } from '@/data/about'
 
 export default function Hero() {
   return (
     <section className={styles.section}>
-      <div className={styles.decoration}></div>
-      <Container className={styles.layout}>
+      <Container narrow>
         <div className={styles.content}>
           <span className={styles.badge}>
             ASBL à Seraing
           </span>
-          <h1 className={styles.title}>
-            Apprendre, créer, <br/>
-            <span className={styles.accent}>se rencontrer.</span>
-          </h1>
-          <p className={styles.description}>
-            Ateliers de couture et de création textile pour enfants et adultes, en petits groupes de 5.
-          </p>
+          <p className={styles.eyebrow}>De l’imagination à la création</p>
+          <h1 className={styles.title}>Cours de couture pour débutants à Seraing, pour enfants et adultes</h1>
+          <p className={styles.description}>{about.introduction}</p>
+          <p className={styles.online}>Vous préférez commencer à distance ? <Link href="/cours">Découvrez nos cours de couture en ligne.</Link></p>
           <div className={styles.actions}>
-            <Link prefetch={false} href={reservationHref} className="button-primary">
-              Réserver un atelier
+            <Link href={reservationHref} className="button-primary">
+              Demander un atelier
             </Link>
             <Link href="#mission" className="button-secondary">
               Découvrir l'ASBL
             </Link>
           </div>
-        </div>
-        <div className={styles.imageFrame}>
-          <Image src="/hero-image.jpg" alt="Atelier de couture" fill className={styles.image} sizes="(min-width: 1280px) 600px, (min-width: 768px) 45vw, 95vw" priority />
-          <div className={styles.overlay}></div>
         </div>
       </Container>
     </section>

@@ -1,9 +1,14 @@
-.header { @apply fixed top-0 w-full z-50 bg-ivoire/95; padding-block: 1rem; transition: padding .3s, box-shadow .3s; }
-.scrolled { @apply shadow-md; padding-block: .75rem; }
-.layout { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.logo { position: relative; display: block; width: clamp(8rem, 35vw, 14rem); height: 3rem; min-width: 0; flex-shrink: 1; }
-.image { object-fit: contain; object-position: left; }
+.header { composes: panel from './ui/GlassSurface.module.css'; position: fixed; inset: 0 0 auto; z-index: 50; border-radius: 0 0 1.25rem 1.25rem; padding-block: .8rem; transition: padding .2s, box-shadow .2s; container: site-header / inline-size; }
+.scrolled { padding-block: .5rem; box-shadow: var(--studio-header-shadow); }
+.layout { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; }
+.layout > :last-child { margin-inline-start: auto; }
+.logo { display: inline-flex; flex: 1 1 12rem; max-width: 100%; min-width: 0; container: site-header-brand / inline-size; }
 .navigation { display: none; }
-.navigation a { min-height: 2.75rem; display: inline-flex; align-items: center; }
+.navigation a { display: inline-flex; align-items: center; min-height: 2.75rem; white-space: nowrap; }
 .navigation a:hover { text-decoration: underline; text-underline-offset: .2em; }
-@media (min-width: 1024px) { .navigation { display: flex; align-items: center; gap: 1.5rem; font-size: .875rem; font-weight: 500; } }
+@media (min-width: 1024px) { .navigation { display: flex; align-items: center; gap: 1.25rem; font-size: .875rem; font-weight: 600; } }
+/* Le seuil suit la taille du texte pour garder des liens lisibles lors du zoom. */
+@container site-header (max-width: 60em) {
+  .navigation { display: none; }
+  .layout > :last-child { display: block; }
+}

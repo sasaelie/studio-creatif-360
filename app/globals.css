@@ -3,21 +3,45 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --studio-off-white: #f7f7f7;
+    --studio-powder-pink: #edc9d4;
+    --studio-off-white-rgb: 247 247 247;
+    --studio-shadow-rgb: 112 108 106;
+    --studio-panel-shadow: 0 18px 42px rgb(var(--studio-shadow-rgb) / .12), 0 4px 14px rgb(var(--studio-shadow-rgb) / .06), inset 0 1px 0 #fff;
+    --studio-header-shadow: 0 8px 28px rgb(var(--studio-shadow-rgb) / .14);
+    --studio-paper-shadow: 0 7px 20px rgb(var(--studio-shadow-rgb) / .1);
+  }
   body {
     @apply bg-ivoire text-texte-fonce antialiased;
+    background-color: var(--studio-off-white);
     overflow-wrap: anywhere;
+    isolation: isolate;
+    line-height: 1.6;
   }
-  html { scroll-padding-top: 7rem; }
+  html { scroll-padding-top: max(7rem, calc(var(--site-header-height, 4.5rem) + 1rem)); }
   :focus-visible { outline: 3px solid #4E665B; outline-offset: 4px; }
   footer :focus-visible { outline-color: #F4DFE3; }
   body:has(dialog[open]) { overflow: hidden; }
-  h1, h2, h3, h4 {
+  h1, h2 {
     @apply font-manuscrite text-sauge-fonce;
   }
+  h3, h4 { font-family: var(--font-dm-sans), sans-serif; color: #354e42; }
 }
 
 @layer components {
   .site-main { min-height: 100vh; }
+  .error-panel { max-width: 48rem; margin: 8rem auto 3rem; padding: 1.5rem; }
+  .error-panel h1 { font-size: 2.5rem; line-height: 1.2; }
+  .error-panel p { margin-block: 1rem; }
+  .site-atmosphere {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      linear-gradient(125deg, var(--studio-powder-pink) 0%, #f4dfe4 28%, var(--studio-off-white) 55%, #fdfdfd 75%, #f0d4dd 100%);
+  }
   .button-primary, .button-secondary {
     display: inline-flex;
     align-items: center;
@@ -27,11 +51,11 @@
     border-radius: 9999px;
     font-weight: 500;
     text-align: center;
-    transition: background-color .2s;
+    transition: background-color .2s, box-shadow .2s;
   }
   .button-primary { @apply bg-sauge-fonce text-white; }
   .button-primary:hover { @apply bg-texte-fonce; }
-  .button-secondary { @apply border border-sauge-fonce text-sauge-fonce; }
+  .button-secondary { @apply border border-sauge-fonce text-sauge-fonce; background: rgb(255 255 255 / .28); }
   .button-secondary:hover { @apply bg-sauge/10; }
   .skip-link {
     @apply bg-ivoire text-texte-fonce;

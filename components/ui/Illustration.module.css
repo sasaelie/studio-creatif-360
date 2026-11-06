@@ -1,0 +1,5 @@
+.frame { display: block; width: 100%; min-width: 0; }
+.image { display: block; width: 100%; height: auto; object-fit: contain; border: 1px solid var(--studio-off-white); border-radius: 1rem; box-shadow: var(--studio-paper-shadow); }
+.banner { max-width: 48rem; margin-inline: auto; }
+.large { max-width: 28rem; margin-inline: auto; }
+.fallback { display: grid; place-items: center; min-height: 12rem; padding: 1rem; border: 1px solid var(--studio-off-white); border-radius: 1rem; background: var(--studio-off-white); }

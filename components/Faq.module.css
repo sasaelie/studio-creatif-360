@@ -1,0 +1,8 @@
+.section { padding-block: clamp(2rem, 5vw, 4rem); }
+.section h2 { font-size: clamp(2.25rem, 4vw, 3rem); line-height: 1.15; }
+.questions { margin-top: 1.25rem; }
+.questions details { border-bottom: 1px solid rgb(113 87 82 / .22); }
+.questions summary { padding: 1rem .25rem; cursor: pointer; font-weight: 600; }
+.questions p { padding: 0 .25rem 1rem; max-width: 48rem; color: #514841; }
+.contact { margin-top: 1.5rem; font-size: .9rem; }
+.contact a { text-decoration: underline; text-underline-offset: .2em; }

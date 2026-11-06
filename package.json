@@ -8,6 +8,7 @@
     "start": "next start",
     "typecheck": "tsc --noEmit --incremental false",
     "check:encoding": "node scripts/check-encoding.mjs",
+    "test:e2e": "playwright test",
     "check": "npm run check:encoding && npm run build && npm run typecheck"
   },
   "engines": {
@@ -25,6 +26,7 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@playwright/test": "1.65.0",
     "@types/node": "^24.0.0",
     "@types/react": "^18.3.0",
     "autoprefixer": "^10.0.1",
