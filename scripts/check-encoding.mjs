@@ -39,8 +39,8 @@ function main() {
     const files = requestedFiles.length
       ? requestedFiles.map(path => resolve(path))
       : [
-        ...['app', 'components', 'data', 'hooks', 'scripts'].flatMap(directory => collectFiles(resolve(projectRoot, directory))),
-        ...['package.json', 'tailwind.config.js', 'postcss.config.js', 'tsconfig.json', 'README.md'].map(path => resolve(projectRoot, path)),
+        ...['app', 'components', 'data', 'hooks', 'scripts', 'tests', 'docs'].flatMap(directory => collectFiles(resolve(projectRoot, directory))),
+        ...['package.json', 'tailwind.config.js', 'postcss.config.js', 'tsconfig.json', 'playwright.config.ts', 'README.md'].map(path => resolve(projectRoot, path)),
       ]
     const results = files.map(checkFile)
     if (results.includes(false)) {

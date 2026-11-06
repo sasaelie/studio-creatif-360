@@ -35,3 +35,7 @@ jobs:
           NEXT_TELEMETRY_DISABLED: '1'
       - name: Vérifier les vulnérabilités
         run: npm audit --audit-level=moderate
+      - name: Préparer Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Vérifier les parcours et le responsive
+        run: npm run test:e2e
