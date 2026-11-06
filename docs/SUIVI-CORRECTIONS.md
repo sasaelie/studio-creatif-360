@@ -81,3 +81,16 @@ Validation locale de cet ajustement :
 - Audit npm sans vulnérabilité et `git diff --check` sans erreur. Les fichiers des images originales sont conservés.
 
 Ces résultats concernent la compilation locale correspondante ; l’état de la CI et de l’aperçu Vercel est contrôlé séparément avant présentation.
+
+## Dernier ajustement : mélange rose poudré–ivoire et ombres ivoire
+
+Base : commit 0ee7d90b628c990c880d7146ee0e550eaf8db803.
+
+- Dégradé diagonal continu avec rose poudré `#edc9d4` et ivoire `#fff8e7`, pour rendre les deux tons visibles dans la fenêtre.
+- Ombres des panneaux, de l’en-tête après défilement et des fiches en ivoire. Suppression des anciennes composantes gris-vert et brunes de ces ombres.
+- Voile du menu ouvert en ivoire, avec son flou conservé.
+- Variables de palette et d’ombre centralisées dans `app/globals.css`. Structure, textes, images et interactions conservés.
+
+Vérification locale : compilation, TypeScript et encodage des 76 fichiers réussis ; audit npm sans vulnérabilité ; `git diff --check` sans erreur.
+
+Captures examinées à 390 et 1440 px sur l’accueil, les ateliers et le blog, avec défilement et ouverture du menu mobile. Les couleurs calculées des ombres des panneaux, du menu après défilement et des fiches sont toutes en RGB 255, 248, 231 (ivoire), avec des opacités adaptées. Le voile du dialogue utilise le même ivoire. Aucun débordement horizontal constaté. La suite existante de 30 tests est relancée par la CI GitHub sur le commit publié.

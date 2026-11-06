@@ -1,5 +1,5 @@
 .header { composes: panel from './ui/GlassSurface.module.css'; position: fixed; inset: 0 0 auto; z-index: 50; border-radius: 0 0 1.25rem 1.25rem; padding-block: .8rem; transition: padding .2s, box-shadow .2s; container: site-header / inline-size; }
-.scrolled { padding-block: .5rem; box-shadow: 0 8px 28px rgb(46 68 58 / .18); }
+.scrolled { padding-block: .5rem; box-shadow: var(--studio-header-shadow); }
 .layout { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; }
 .layout > :last-child { margin-inline-start: auto; }
 .logo { display: inline-flex; flex: 1 1 12rem; max-width: 100%; min-width: 0; container: site-header-brand / inline-size; }

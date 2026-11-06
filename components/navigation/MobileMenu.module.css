@@ -1,7 +1,7 @@
 .mobile { flex-shrink: 0; }
 .trigger, .close { color: #354e42; background: rgb(255 255 255 / .38); border: 1px solid rgb(255 255 255 / .9); border-radius: 2rem; padding: .5rem .85rem; min-height: 2.75rem; font-size: .9rem; font-weight: 700; white-space: nowrap; }
 .dialog { composes: panel from '../ui/GlassSurface.module.css'; color: #263e33; padding: 0; width: min(27rem, calc(100% - 2rem)); max-height: calc(100dvh - 2rem); margin: auto; overflow-y: auto; }
-.dialog::backdrop { background: rgb(31 49 40 / .32); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+.dialog::backdrop { background: rgb(var(--studio-shadow-rgb) / .45); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
 .panel { padding: clamp(.75rem, 4vw, 1.25rem); }
 .heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; }
 .heading h2 { font-size: 1.1rem; font-family: var(--font-dm-sans), sans-serif; font-weight: 700; overflow-wrap: normal; }
