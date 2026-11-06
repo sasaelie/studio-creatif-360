@@ -85,7 +85,7 @@ titres, sans nappe verte dans le décor. La mission et son illustration partagen
 un panneau. L’accueil n’affiche pas le catalogue ou les articles : un accès unique
 conduit à chaque page dédiée, où les entrées sont séparées par de simples lignes.
 
-`GlassSurface.module.css` centralise la transparence (32 % de blanc), le flou,
+`GlassSurface.module.css` centralise la transparence (24 % de blanc), le flou,
 les bordures et les ombres des panneaux. Un fond opaque est conservé pour les
 navigateurs qui ne prennent pas en charge le flou. Les images originales sont
 affichées entières et ne déclenchent aucune ouverture au clic. Leurs dimensions
@@ -93,7 +93,7 @@ proviennent des imports statiques de `data/illustrations.ts` ; un nouveau visuel
 doit y être enregistré. Les coins des fiches sont arrondis, avec une fine bordure
 blanc neutre et une ombre gris doux légère. Leur contenu n’a pas été retouché.
 La typographie manuscrite est réservée aux grands titres. Les pages illustrées
-utilisent un fond blanc neutre à 58 % et une marge intérieure unique de 16 px.
+utilisent un fond blanc neutre à 48 % et une marge intérieure unique de 16 px.
 Seule la transparence de ce fond est ajustée : textes et images restent opaques.
 Les variables `--studio-off-white` et `--studio-off-white-rgb` centralisent cette
 teinte sans dominante jaune. L’ancien nom de couleur Tailwind `ivoire` reste
@@ -109,6 +109,19 @@ Vignes 8, boîte 1, 4100 Seraing, Belgique. `data/about.ts` contient la mission 
 la présentation d’Alyssia Wilkins ; `data/faq.ts` reprend les réponses fréquentes.
 Les métadonnées, les URL canoniques, le sitemap et les données structurées de
 l’association relient ces pages. Aucun classement dans Google n’est garanti.
+
+Les treize pages connues ont un titre, une description propre et une adresse
+canonique, vérifiés dans les tests de rendu. Les descriptions SEO des cours sont
+distinctes de leurs courtes présentations affichées. Le site utilise un H1 par
+page, des liens internes, des textes alternatifs pour les illustrations et des
+contenus locaux liés à Seraing. `robots.txt` référence le sitemap.
+
+Ces éléments préparent le référencement ; ils ne confirment pas l’indexation.
+Un aperçu Vercel protégé n’est pas une version publique à référencer. Après
+fusion et mise en production, il reste à contrôler l’accès public, les URL du
+sitemap sur le domaine retenu, l’indexation dans Google Search Console et les
+performances réelles (Core Web Vitals). Ces contrôles externes ne sont pas
+remplacés par les tests du code.
 
 Les mentions légales indiquent la publication aux Annexes du Moniteur belge du
 21 août 2026, d’après les renseignements fournis. L’association doit maintenir

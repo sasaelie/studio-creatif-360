@@ -119,3 +119,20 @@ Base : commit 8a5220ad136b68f091c33f08322890d1ce8db0db. La teinte souhaitée est
 Vérification locale : compilation, TypeScript et encodage des 76 fichiers réussis ; audit npm sans vulnérabilité ; `git diff --check` sans erreur.
 
 Captures examinées à 390 et 1440 px sur l’accueil et le blog, avec défilement et ouverture du menu mobile. Les styles calculés confirment le blanc RGB 247, 247, 247 du fond, des panneaux illustrés à 58 % et du voile du menu à 45 %. Les ombres gris doux sont conservées et aucun débordement horizontal n’est constaté. Les anciennes valeurs crème et les anciennes variables `--studio-ivory*` ne sont plus utilisées dans le code de l’interface. La CI relance les 30 tests existants sur le commit publié.
+
+## Verre plus transparent et vérification des bases SEO
+
+Base : commit 762db6c60175a5f1c726faf2e6afc8a2640b8e78.
+
+- Fonds des panneaux communs : 32 % → 24 %. Panneaux illustrés : 58 % → 48 %. Flou, bordures, ombres gris doux et blanc neutre conservés ; aucun changement d’opacité des textes et images.
+- Audit initial du rendu des treize pages : un H1 et un titre distinct partout ; titres Open Graph correspondants ; données structurées de l’ASBL. Description générale héritée sur les deux pages légales et adresse canonique absente sur la confidentialité.
+- Complément des descriptions propres des pages légales et de la canonique `/rgpd`. Descriptions SEO des trois cours enrichies, distinctes des textes courts des cartes, et titres précisés comme cours de couture débutant.
+- Contrôle automatique des titres et descriptions distincts, des canoniques et de leur présence dans le sitemap étendu aux treize pages.
+
+Limites de cet audit : il porte sur le code et le rendu local correspondant à la branche d’aperçu. Le domaine public utilisé dans les canoniques et le sitemap est `https://studio-creatif-360.vercel.app`. L’aperçu Vercel conserve sa protection ; les changements ne sont pas encore fusionnés dans `main`. L’indexation Google, les mesures Core Web Vitals en production, le choix d’un domaine propre et la visibilité d’une éventuelle fiche Google Business ne sont pas vérifiés ici. Aucun positionnement Google n’est garanti.
+
+Vérification locale : `npm run check` réussi (76 fichiers UTF-8, compilation et TypeScript), audit npm sans vulnérabilité, `git diff --check` sans erreur. Six tests ciblés réussis sur mobile, tablette et ordinateur, dont le contrôle des métadonnées distinctes et des canoniques des treize pages. La CI relance la suite complète de trente tests sur le commit publié.
+
+Captures examinées à 390 et 1440 px sur les ateliers et le blog, avec menu mobile ouvert. Les styles calculés confirment des fonds à 24 % et 48 %, un flou de 22 px et une opacité de 100 % des blocs, textes et images. Aucun débordement horizontal constaté.
+
+Contrôle public au moment de cet audit : `https://studio-creatif-360.vercel.app/` répond 200, tandis que `/robots.txt` et `/sitemap.xml` répondent 404. Le déploiement de production READY correspond encore au commit main `b6765374e5025c3641cba12fdd14b973461c173a`, antérieur aux pages et routes SEO préparées. Cette situation doit être recontrôlée après fusion et déploiement de la nouvelle version. Aucun résultat d’indexation Google ni mesure de performances réelles n’est déduit des tests locaux.
