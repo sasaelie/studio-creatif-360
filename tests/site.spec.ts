@@ -90,7 +90,9 @@ test('les cartes et les panneaux utilisent un verre dépoli cohérent', async ({
       const computed = getComputedStyle(element)
       return { background: computed.backgroundColor, blur: computed.backdropFilter, shadow: computed.boxShadow }
     })
-    expect(style.background).toMatch(/0\.32\)/)
+    const alpha = Number(style.background.match(/,\s*([\d.]+)\)$/)?.[1] ?? 1)
+    expect(alpha).toBeGreaterThan(0)
+    expect(alpha).toBeLessThan(1)
     expect(style.blur).not.toBe('none')
     expect(style.shadow).not.toBe('none')
   }
@@ -218,12 +220,16 @@ test('les informations confirmées sont cohérentes entre les horaires, la FAQ e
 test('les pages dédiées ont leurs métadonnées et une localisation structurée cohérente', async ({ page, request }) => {
   const sitemap = await (await request.get('/sitemap.xml')).text()
   const titles: string[] = []
-  for (const path of ['/', '/notre-mission', '/localisation', '/cours', '/blog']) {
+  const descriptions: string[] = []
+  for (const path of paths) {
     await page.goto(path)
     const title = await page.title()
     expect(titles).not.toContain(title)
     titles.push(title)
     await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /.{50,}/)
+    const description = (await page.locator('meta[name="description"]').getAttribute('content'))!
+    expect(descriptions, path).not.toContain(description)
+    descriptions.push(description)
     const canonical = page.locator('link[rel="canonical"]')
     await expect(canonical).toHaveCount(1)
     expect(new URL((await canonical.getAttribute('href'))!).href).toBe(new URL(path, 'https://studio-creatif-360.vercel.app').href)

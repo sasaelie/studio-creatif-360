@@ -2,7 +2,11 @@ import Link from 'next/link'
 import ContentPage from '@/components/ui/ContentPage'
 import { site } from '@/data/site'
 
-export const metadata = { title: 'Mentions légales', alternates: { canonical: '/mentions-legales' } }
+export const metadata = {
+  title: 'Mentions légales',
+  description: 'Identité, coordonnées et numéro d’entreprise de StudioCreatif360 ASBL à Seraing. Informations sur l’hébergement du site et les demandes d’atelier.',
+  alternates: { canonical: '/mentions-legales' },
+}
 
 export default function LegalPage() {
   return <ContentPage title="Mentions légales" description="Les informations pratiques pour identifier et contacter l’association.">

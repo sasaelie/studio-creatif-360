@@ -1,7 +1,11 @@
 import ContentPage from '@/components/ui/ContentPage'
 import { site } from '@/data/site'
 
-export const metadata = { title: 'Confidentialité' }
+export const metadata = {
+  title: 'Confidentialité',
+  description: 'Découvrez comment fonctionne la demande par e-mail de StudioCreatif360 et comment contacter l’association pour vos questions sur vos données personnelles.',
+  alternates: { canonical: '/rgpd' },
+}
 
 export default function PrivacyPage() {
   return <ContentPage title="Votre confidentialité" description="Comprendre ce qui se passe lorsque vous consultez le site ou préparez une demande.">

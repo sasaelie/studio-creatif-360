@@ -11,7 +11,7 @@ export function generateStaticParams() { return courses.map(course => ({ slug: c
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params
   const course = courses.find(item => item.id === slug)
-  return { title: course?.title ?? 'Cours introuvable', description: course?.description, alternates: course ? { canonical: course.href } : undefined }
+  return { title: course ? `${course.title} : cours de couture débutant` : 'Cours introuvable', description: course?.seoDescription, alternates: course ? { canonical: course.href } : undefined }
 }
 
 export default async function CoursePage({ params }: Props) {
