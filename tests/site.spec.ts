@@ -122,6 +122,67 @@ test('texte agrandi, réduction des animations et repli en cas d’image indispo
   await expect(page.getByText('Visuel indisponible', { exact: true })).toBeVisible()
 })
 
+test('les fiches restent entières sans action d’agrandissement et apportent des repères pratiques', async ({ page }) => {
+  for (const path of ['/blog', '/cours', '/blog/chouchou', '/cours/machine']) {
+    await page.goto(path)
+    await expect(page.getByText('Voir le visuel en grand', { exact: true })).toHaveCount(0)
+    for (const image of await page.locator('main img').all()) {
+      await image.scrollIntoViewIfNeeded()
+      await image.evaluate(element => (element as HTMLImageElement).decode())
+      const geometry = await image.evaluate(element => {
+        const image = element as HTMLImageElement
+        const box = image.getBoundingClientRect()
+        return { ratio: box.width / box.height, naturalRatio: image.naturalWidth / image.naturalHeight, link: image.closest('a'), interactive: image.closest('button, [role="button"]') !== null }
+      })
+      expect(geometry.ratio).toBeCloseTo(geometry.naturalRatio, 2)
+      expect(geometry.link).toBeNull()
+      expect(geometry.interactive).toBe(false)
+    }
+  }
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/blog')
+  const article = page.getByRole('article').first()
+  await expect(article).toContainText('Matériel : chute de tissu, élastique et fil.')
+  await expect(article).toContainText('Gestes travaillés : couture droite')
+  await expect(article).not.toContainText('Pour prendre confiance')
+  const fillRatio = await article.locator('img').evaluate(element => element.getBoundingClientRect().width / element.closest('article')!.getBoundingClientRect().width)
+  expect(fillRatio).toBeGreaterThan(.9)
+  const heading = article.getByRole('heading').getByRole('link')
+  expect(await heading.evaluate(element => getComputedStyle(element).textDecorationLine)).toBe('none')
+  await heading.click()
+  await expect(page).toHaveURL(/\/blog\/chouchou$/)
+})
+
+test('le retour reste sous le menu, même avec le texte agrandi sur petit écran', async ({ page }) => {
+  for (const width of [320, 1024]) {
+    await page.setViewportSize({ width, height: 740 })
+    await page.goto('/blog')
+    const back = page.locator('main').getByRole('link', { name: 'Retour à l’accueil', exact: false })
+    const gap = () => back.evaluate(element => element.getBoundingClientRect().top - document.querySelector('body > header')!.getBoundingClientRect().bottom)
+    await expect.poll(gap).toBeGreaterThanOrEqual(24)
+    await page.addStyleTag({ content: 'html { font-size: 200% !important; }' })
+    await expect.poll(gap).toBeGreaterThanOrEqual(24)
+    const header = page.locator('body > header')
+    expect(await header.evaluate(element => element.getBoundingClientRect().height < innerHeight * .4)).toBe(true)
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+    await expect(back).toBeInViewport()
+    const menu = page.getByRole('button', { name: 'Menu', exact: true })
+    await expect(menu).toBeVisible()
+    await menu.click()
+    const dialog = page.getByRole('dialog')
+    await expect(dialog).toBeVisible()
+    const menuTitle = dialog.getByRole('heading', { name: 'Navigation', exact: true })
+    expect(await menuTitle.evaluate(element => element.getBoundingClientRect().height <= parseFloat(getComputedStyle(element).lineHeight) + 1)).toBe(true)
+    expect(await dialog.evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true)
+    await dialog.getByRole('link', { name: 'Réserver', exact: true }).scrollIntoViewIfNeeded()
+    await expect(dialog.getByRole('link', { name: 'Réserver', exact: true })).toBeInViewport()
+    await page.keyboard.press('Escape')
+    await expect(menu).toBeFocused()
+    await back.click()
+    await expect(page).toHaveURL(/\/#blog$/)
+  }
+})
+
 test('les informations confirmées sont cohérentes entre les horaires, la FAQ et les pages', async ({ page }) => {
   await page.goto('/')
   const sessions = page.locator('#programme article')

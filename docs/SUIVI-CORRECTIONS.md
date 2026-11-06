@@ -56,3 +56,28 @@ Validation locale de cette mise à jour, le 6 novembre 2026 :
 - `npm audit` : aucune vulnérabilité. `git diff --check` : aucune erreur d’espacement.
 
 Ces contrôles concernent la compilation locale. La CI GitHub et l’aperçu Vercel doivent être vérifiés sur le commit publié ; la production ne doit pas être confondue avec cet aperçu.
+
+## Ajustement ciblé des fiches conseils
+
+Base : commit 6658b843d5ced43acab175b7c572eba11ea396b4. Le brief conserve la structure, les couleurs, les polices et les images sources. Le choix confirmé est de supprimer entièrement l’action d’agrandissement, y compris la loupe et le clic sur l’image.
+
+- Les fiches utilisent leurs proportions natives, sans hauteur imposée ni recadrage. Imports statiques centralisés dans `data/illustrations.ts` pour réserver leur place avant chargement.
+- Images non interactives ; suppression du bandeau, du lien vers le fichier et de l’icône.
+- Arrondis de 16 px, bordure ivoire de 1 px et ombre chaude diffuse. Panneaux illustrés plus clairs, avec une marge intérieure de 16 px.
+- Badge sauge sur les catégories du blog ; titres manuscrits sans soulignement permanent. Les liens ordinaires conservent leur repère visuel.
+- Description du chouchou remplacée par le matériel et les gestes travaillés. Le second article propose des vérifications pratiques avant l’achat. Aucune durée inventée.
+- Le menu peut se répartir sur plusieurs lignes en cas de texte agrandi. Sa hauteur réelle alimente la réserve supérieure des pages et des ancres.
+- Le contrôle du texte à 200 % inclut désormais le masquage par le menu, au-delà de la seule absence de débordement horizontal.
+
+Validation locale de cet ajustement :
+
+- `npm run check` réussi : 76 fichiers UTF-8 valides, compilation et TypeScript.
+- Suite de 30 tests Playwright réussie. Après le dernier ajustement du dialogue, les six contrôles concernés ont été relancés avec succès sur mobile, tablette et ordinateur. La CI relance la suite complète sur le commit publié.
+- Les fiches ne sont plus dans un lien ou un bouton et aucun bandeau d’agrandissement n’est affiché. Leurs proportions naturelles et les liens vers les articles sont contrôlés automatiquement.
+- À 390 px, la fiche du chouchou occupe les 324 px disponibles dans son entrée, contre environ 173 px lors de l’audit précédent. Son arrondi calculé est de 16 px.
+- Captures examinées à 320, 390, 768, 1024 et 1440 px, ainsi que sur les pages cours, article et mission. Aucun débordement horizontal constaté.
+- Texte à 200 % : en-tête d’environ 201 px à 320 px de largeur (contre 619 px lors de l’audit initial), et 141 px à 1024 px. Le lien retour reste sous le menu et visible dans la fenêtre.
+- Le dialogue agrandi conserve son titre sur une ligne, propose une fermeture lisible et permet d’atteindre la réservation par défilement interne. Focus et touche Échap vérifiés.
+- Audit npm sans vulnérabilité et `git diff --check` sans erreur. Les fichiers des images originales sont conservés.
+
+Ces résultats concernent la compilation locale correspondante ; l’état de la CI et de l’aperçu Vercel est contrôlé séparément avant présentation.

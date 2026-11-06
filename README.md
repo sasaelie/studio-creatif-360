@@ -84,8 +84,17 @@ conduit à chaque page dédiée, où les entrées sont séparées par de simples
 `GlassSurface.module.css` centralise la transparence (32 % de blanc), le flou,
 les bordures et les ombres des panneaux. Un fond opaque est conservé pour les
 navigateurs qui ne prennent pas en charge le flou. Les images originales sont
-affichées entières avec `object-fit: contain` et s’ouvrent en grand ; leur contenu
-n’a pas été retouché. La typographie manuscrite est réservée aux grands titres.
+affichées entières et ne déclenchent aucune ouverture au clic. Leurs dimensions
+proviennent des imports statiques de `data/illustrations.ts` ; un nouveau visuel
+doit y être enregistré. Les coins des fiches sont arrondis, avec une fine bordure
+ivoire et une ombre chaude légère. Leur contenu n’a pas été retouché.
+La typographie manuscrite est réservée aux grands titres. Les pages illustrées
+utilisent un panneau ivoire plus clair et une marge intérieure unique de 16 px.
+
+`useHeaderHeight` réserve la hauteur réelle de l’en-tête après redimensionnement,
+chargement des polices et changement de taille du texte. Une marge de confort
+sépare le menu du lien retour. Le nom du studio reste lisible sur petit écran ;
+le menu peut passer sur une deuxième ligne lorsque le texte est agrandi.
 
 `data/site.ts` centralise l’adresse confirmée par l’association : Rue Sous les
 Vignes 8, boîte 1, 4100 Seraing, Belgique. `data/about.ts` contient la mission et
