@@ -1,0 +1,19 @@
+.section { @apply bg-rose-poudre/20; padding-block: clamp(3rem, 7vw, 6rem); }
+.heading { text-align: center; margin-bottom: 3rem; }
+.availabilityNote { @apply text-gray-600; font-size: .875rem; margin-top: 1rem; }
+.list { display: grid; gap: 1rem; }
+.program { @apply bg-ivoire rounded-2xl shadow-sm border border-rose-poudre/50; display: flex; flex-direction: column; padding: clamp(1rem, 3vw, 1.5rem); gap: 1.5rem; min-width: 0; }
+.details { flex: 1; min-width: 0; }
+.dayAudience { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-bottom: .5rem; }
+.day { font-size: 1.25rem; font-weight: 700; }
+.audience { @apply bg-sauge/10 text-sauge-fonce rounded-full; padding: .25rem .75rem; font-size: .875rem; font-weight: 500; }
+.schedule, .priceLabel { @apply text-gray-600; }
+.actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: center; }
+.price { display: block; font-weight: 700; font-size: 1.125rem; }
+.priceBlock { min-width: 0; }
+.priceLabel, .availability { font-size: .875rem; }
+.availability { text-align: right; }
+.reserve { @apply bg-sauge-fonce text-white rounded-full; display: block; padding: .75rem 1.5rem; text-align: center; font-weight: 500; grid-column: 1 / -1; }
+.reserve:hover { @apply bg-texte-fonce; }
+@media (min-width: 640px) { .actions { grid-template-columns: auto auto auto; gap: 1.5rem; } .reserve { grid-column: auto; } }
+@media (min-width: 768px) { .program { flex-direction: row; align-items: center; justify-content: space-between; } }

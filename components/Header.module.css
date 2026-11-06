@@ -1,0 +1,9 @@
+.header { @apply fixed top-0 w-full z-50 bg-ivoire/95; padding-block: 1rem; transition: padding .3s, box-shadow .3s; }
+.scrolled { @apply shadow-md; padding-block: .75rem; }
+.layout { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.logo { position: relative; display: block; width: clamp(8rem, 35vw, 14rem); height: 3rem; min-width: 0; flex-shrink: 1; }
+.image { object-fit: contain; object-position: left; }
+.navigation { display: none; }
+.navigation a { min-height: 2.75rem; display: inline-flex; align-items: center; }
+.navigation a:hover { text-decoration: underline; text-underline-offset: .2em; }
+@media (min-width: 1024px) { .navigation { display: flex; align-items: center; gap: 1.5rem; font-size: .875rem; font-weight: 500; } }

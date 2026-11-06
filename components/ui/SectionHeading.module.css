@@ -1,0 +1,2 @@
+.heading h2 { font-size: clamp(2.25rem, 4vw, 3rem); line-height: 1.15; }
+.heading p { @apply text-gray-600; font-size: 1.125rem; margin-top: 1rem; }

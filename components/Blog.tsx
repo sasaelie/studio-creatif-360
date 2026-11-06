@@ -1,38 +1,22 @@
-﻿import Image from 'next/image'
+import { articles } from '@/data/articles'
+import ArticleCard from './cards/ArticleCard'
+import Container from './ui/Container'
+import SectionHeading from './ui/SectionHeading'
+import styles from './Blog.module.css'
 import Link from 'next/link'
 
 export default function Blog() {
   return (
-    <section id="blog" className="py-24 bg-rose-poudre/10">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex justify-between items-end mb-12">
-          <div>
-            <h2 className="text-5xl mb-4">Le blog</h2>
-            <p className="text-gray-600 text-lg">Astuces et tutoriels pour aller plus loin.</p>
-          </div>
-          <Link href="/blog" className="hidden md:inline-block border border-sauge text-sauge px-6 py-2 rounded-full hover:bg-sauge/10 transition-colors">
-            Tous les articles
-          </Link>
+    <section id="blog" className={styles.section}>
+      <Container>
+        <div className={styles.heading}>
+          <SectionHeading title="Le blog" description="Astuces et tutoriels pour aller plus loin." />
+          <Link prefetch={false} href="/blog" className="button-secondary">Tous les articles</Link>
         </div>
-        <div className="grid md:grid-cols-2 gap-8">
-          <article className="group cursor-pointer">
-            <div className="relative h-[300px] rounded-2xl overflow-hidden mb-6">
-              <Image src="/blog-chouchou.jpg" alt="CrÃ©er son premier chouchou" fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-            </div>
-            <span className="text-sm font-semibold text-sauge tracking-wider uppercase">DÃ©butant</span>
-            <h3 className="text-2xl font-manuscrite mt-2 group-hover:text-sauge transition-colors">Ton premier projet : le chouchou</h3>
-            <p className="text-gray-600 mt-2 line-clamp-2">Pour prendre confiance, commence par un petit accessoire facile Ã  terminer...</p>
-          </article>
-          <article className="group cursor-pointer">
-            <div className="relative h-[300px] rounded-2xl overflow-hidden mb-6">
-              <Image src="/blog-materiel.jpg" alt="PrÃ©parer son matÃ©riel" fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-            </div>
-            <span className="text-sm font-semibold text-sauge tracking-wider uppercase">MatÃ©riel</span>
-            <h3 className="text-2xl font-manuscrite mt-2 group-hover:text-sauge transition-colors">Les indispensables pour dÃ©buter</h3>
-            <p className="text-gray-600 mt-2 line-clamp-2">Inutile d'acheter tout le magasin ! Voici ce qu'il te faut vraiment...</p>
-          </article>
+        <div className={styles.grid}>
+          {articles.map(item => <ArticleCard key={item.id} article={item} />)}
         </div>
-      </div>
+      </Container>
     </section>
   )
 }

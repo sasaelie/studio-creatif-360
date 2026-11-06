@@ -1,0 +1,6 @@
+.card { min-width: 0; }
+.imageFrame { position: relative; aspect-ratio: 2 / 1; overflow: hidden; border-radius: 1rem; margin-bottom: 1.5rem; }
+.image { object-fit: cover; }
+.category { @apply text-sauge-fonce; font-size: .875rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+.card h3 { font-size: 1.75rem; line-height: 1.2; margin-top: .5rem; }
+.card p { @apply text-gray-600; margin-top: .75rem; }

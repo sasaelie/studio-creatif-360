@@ -1,0 +1,37 @@
+name: Vérification du site
+
+on:
+  push:
+    branches: [main, fix/responsive-architecture]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verification:
+    name: Installation, compilation, types et dépendances
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - name: Préparer Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Installer les versions verrouillées
+        run: npm ci
+      - name: Compiler et vérifier les types
+        run: npm run check
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
+      - name: Vérifier les vulnérabilités
+        run: npm audit --audit-level=moderate
