@@ -1,20 +1,12 @@
 .section { padding-block: 7.5rem 2rem; }
-.layout { display: grid; gap: 1.5rem; align-items: center; }
 .content { min-width: 0; padding-block: .5rem; }
 .content > * + * { margin-top: 1.25rem; }
 .badge { display: inline-block; background: rgb(255 255 255 / .42); border: 1px solid rgb(255 255 255 / .75); color: #354e42; padding: .35rem .8rem; border-radius: 2rem; font-size: .8rem; font-weight: 700; }
-.title { font-size: clamp(2.65rem, 5.5vw, 4.7rem); line-height: 1.05; }
-.accent { color: #354e42; }
-.description { max-width: 33rem; color: #3c4a42; font-size: clamp(1rem, 1.6vw, 1.15rem); }
+.title { max-width: 58rem; font-size: clamp(2.5rem, 5.5vw, 4rem); line-height: 1.1; }
+.description { max-width: 52rem; color: #514841; font-size: clamp(1rem, 1.6vw, 1.15rem); }
 .actions { display: flex; flex-wrap: wrap; gap: .75rem; padding-top: .25rem; }
-.actions a { flex: 1 1 12rem; }
-.visual { composes: panel from './ui/GlassSurface.module.css'; overflow: hidden; min-width: 0; }
-.visualCopy { padding: 1.25rem 1.25rem .75rem; }
-.visualCopy p + p { font-size: .9rem; margin-top: .4rem; }
-.eyebrow { font-weight: 700; color: #354e42; }
-.highlights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: .75rem 1.25rem 1.25rem; gap: .75rem; }
-.highlights li { min-width: 0; border-top: 1px solid rgb(255 255 255 / .8); padding-top: .65rem; }
-.highlights strong, .highlights span { display: block; }
-.highlights strong { font-size: .95rem; color: #354e42; }
-.highlights span { font-size: .7rem; margin-top: .25rem; }
-@media (min-width: 768px) { .layout { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem; } .section { padding-block: 9rem 3rem; } }
+.actions a { flex: 0 1 auto; }
+.eyebrow { font-weight: 700; color: #65534f; }
+.online { max-width: 48rem; font-size: .95rem; }
+.online a { text-decoration: underline; text-underline-offset: .2em; }
+@media (min-width: 768px) { .section { padding-block: 9rem 2rem; } }

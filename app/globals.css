@@ -30,10 +30,9 @@
     z-index: -1;
     pointer-events: none;
     background:
-      radial-gradient(ellipse at 8% 18%, #e7bdc7 0%, transparent 50%),
-      radial-gradient(ellipse at 90% 65%, #adc2b2 0%, transparent 52%),
-      radial-gradient(ellipse at 45% 95%, #e6c9a7 0%, transparent 48%),
-      #f6f0e8;
+      radial-gradient(ellipse at 8% 18%, #efd3dc 0%, transparent 58%),
+      radial-gradient(ellipse at 95% 85%, #f3dfe3 0%, transparent 55%),
+      #faf7f0;
   }
   .button-primary, .button-secondary {
     display: inline-flex;

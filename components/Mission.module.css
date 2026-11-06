@@ -1,11 +1,13 @@
 .section { padding-block: clamp(2rem, 5vw, 4rem); }
-.layout { display: grid; gap: 1.5rem; align-items: center; }
-.imageFrame { composes: panel from './ui/GlassSurface.module.css'; overflow: hidden; width: 100%; max-width: 30rem; margin-inline: auto; }
-.content { composes: panel from './ui/GlassSurface.module.css'; min-width: 0; order: -1; padding: clamp(1.25rem, 3vw, 2rem); }
+.layout { composes: panel from './ui/GlassSurface.module.css'; display: grid; gap: 1.5rem; align-items: center; padding: clamp(1.25rem, 3vw, 2rem); }
+.imageFrame { overflow: hidden; width: 100%; max-width: 20rem; margin-inline: auto; }
+.content { min-width: 0; }
 .content > * + * { margin-top: 1rem; }
 .title { font-size: clamp(2.25rem, 4vw, 3rem); line-height: 1.15; }
+.title a:hover { text-decoration: underline; text-underline-offset: .15em; }
+.content p > a { text-decoration: underline; text-underline-offset: .2em; }
 .description { color: #3c4a42; font-size: 1rem; }
 .benefits { display: grid; gap: .75rem; padding-top: .25rem; }
 .benefit { display: flex; align-items: center; gap: .75rem; }
 .check { flex: 0 0 auto; display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 50%; background: rgb(255 255 255 / .5); color: #354e42; font-weight: 700; }
-@media (min-width: 768px) { .layout { grid-template-columns: .85fr 1.15fr; gap: 2rem; } .content { order: 0; } }
+@media (min-width: 768px) { .layout { grid-template-columns: 1.2fr .8fr; gap: 2rem; } }

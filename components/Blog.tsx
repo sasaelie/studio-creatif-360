@@ -1,21 +1,12 @@
-import { articles } from '@/data/articles'
-import ArticleCard from './cards/ArticleCard'
 import Container from './ui/Container'
-import SectionHeading from './ui/SectionHeading'
+import TopicLink from './ui/TopicLink'
 import styles from './Blog.module.css'
-import Link from 'next/link'
 
 export default function Blog() {
   return (
     <section id="blog" className={styles.section}>
-      <Container>
-        <div className={styles.heading}>
-          <SectionHeading title="Le blog" description="Astuces et tutoriels pour aller plus loin." />
-          <Link href="/blog" className="button-secondary">Tous les articles</Link>
-        </div>
-        <div className={styles.grid}>
-          {articles.map(item => <ArticleCard key={item.id} article={item} />)}
-        </div>
+      <Container narrow>
+        <TopicLink title="Le blog : conseils et tutoriels" description="Des idées, des gestes à découvrir et de petits projets pour poursuivre votre apprentissage de la couture." href="/blog" label="Tous les articles" />
       </Container>
     </section>
   )
