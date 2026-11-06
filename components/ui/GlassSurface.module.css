@@ -1,5 +1,5 @@
 .panel {
-  background: #f9f6f2;
+  background: var(--studio-off-white);
   border: 1px solid rgb(255 255 255 / .9);
   box-shadow: var(--studio-panel-shadow);
   border-radius: 1.5rem;

@@ -4,7 +4,7 @@
 .heading h1 { font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.1; }
 .heading > p { margin-top: 1rem; font-size: 1.1rem; color: #43524a; }
 .content { composes: panel from './GlassSurface.module.css'; padding: clamp(1.25rem, 4vw, 2.5rem); }
-.illustrated { background: rgb(255 252 246 / .58); padding: 1rem; }
+.illustrated { background: rgb(var(--studio-off-white-rgb) / .58); padding: 1rem; }
 .content h2 { font-size: clamp(1.8rem, 4vw, 2.4rem); line-height: 1.2; margin-block: 1.75rem .75rem; }
 .content h2:first-child { margin-top: 0; }
 .content h3 { font-size: 1.15rem; font-weight: 700; margin-block: 1rem .5rem; }

@@ -106,3 +106,16 @@ Base : commit 6559f660fd00ebdf9cd70bed9817c1042cf86727.
 Vérification locale : compilation, TypeScript et encodage des 76 fichiers réussis ; audit npm sans vulnérabilité ; `git diff --check` sans erreur. Captures examinées à 390 et 1440 px sur le blog et les ateliers, avec défilement et ouverture du menu mobile.
 
 Les styles calculés confirment un fond de panneau à 58 %, une opacité de bloc et d’image de 100 %, des ombres extérieures RGB 112, 108, 106 aux faibles opacités prévues et un voile de menu toujours ivoire. Aucun débordement horizontal constaté. La suite existante de 30 tests est relancée par la CI GitHub sur le commit publié.
+
+## Harmonisation du blanc neutre
+
+Base : commit 8a5220ad136b68f091c33f08322890d1ce8db0db. La teinte souhaitée est un blanc légèrement grisé, sans dominante jaune.
+
+- Remplacement de l’ivoire chaud par `#F7F7F7` dans le dégradé, les panneaux illustrés, le voile du menu, les bordures et les fonds de repli.
+- Suppression de la nuance crème dans le second point clair du dégradé et dans le reflet intérieur des panneaux.
+- Couleur centralisée dans `--studio-off-white` et `--studio-off-white-rgb`. L’ancien nom Tailwind `ivoire` conserve ses usages avec la valeur neutre.
+- Rose poudré, ombres gris doux, fond des panneaux illustrés à 58 %, structure et interactions conservés.
+
+Vérification locale : compilation, TypeScript et encodage des 76 fichiers réussis ; audit npm sans vulnérabilité ; `git diff --check` sans erreur.
+
+Captures examinées à 390 et 1440 px sur l’accueil et le blog, avec défilement et ouverture du menu mobile. Les styles calculés confirment le blanc RGB 247, 247, 247 du fond, des panneaux illustrés à 58 % et du voile du menu à 45 %. Les ombres gris doux sont conservées et aucun débordement horizontal n’est constaté. Les anciennes valeurs crème et les anciennes variables `--studio-ivory*` ne sont plus utilisées dans le code de l’interface. La CI relance les 30 tests existants sur le commit publié.

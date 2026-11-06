@@ -8,7 +8,7 @@ module.exports = {
     extend: {
       colors: {
         'rose-poudre': '#F4DFE3',
-        'ivoire': '#FCFAF8',
+        'ivoire': '#F7F7F7',
         'sauge': '#8DA399',
         'sauge-fonce': '#4E665B',
         'texte-fonce': '#2D2A26',
