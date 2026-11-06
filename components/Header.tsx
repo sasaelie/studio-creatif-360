@@ -1,5 +1,7 @@
 'use client'
+import { useRef } from 'react'
 import { useScrolled } from '@/hooks/useScrolled'
+import { useHeaderHeight } from '@/hooks/useHeaderHeight'
 import { navigation, reservationHref } from '@/data/navigation'
 import Container from './ui/Container'
 import MobileMenu from './navigation/MobileMenu'
@@ -9,9 +11,11 @@ import Brand from './ui/Brand'
 
 export default function Header() {
   const scrolled = useScrolled()
+  const headerRef = useRef<HTMLElement>(null)
+  useHeaderHeight(headerRef)
 
   return (
-    <header className={[styles.header, scrolled ? styles.scrolled : ""].join(" ")}>
+    <header ref={headerRef} className={[styles.header, scrolled ? styles.scrolled : ""].join(" ")}>
       <Container className={styles.layout}>
         <Link href="/" className={styles.logo} aria-label="Studio Créatif 360 — accueil">
           <Brand />
