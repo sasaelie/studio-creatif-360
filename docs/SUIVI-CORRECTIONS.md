@@ -94,3 +94,15 @@ Base : commit 0ee7d90b628c990c880d7146ee0e550eaf8db803.
 Vérification locale : compilation, TypeScript et encodage des 76 fichiers réussis ; audit npm sans vulnérabilité ; `git diff --check` sans erreur.
 
 Captures examinées à 390 et 1440 px sur l’accueil, les ateliers et le blog, avec défilement et ouverture du menu mobile. Les couleurs calculées des ombres des panneaux, du menu après défilement et des fiches sont toutes en RGB 255, 248, 231 (ivoire), avec des opacités adaptées. Le voile du dialogue utilise le même ivoire. Aucun débordement horizontal constaté. La suite existante de 30 tests est relancée par la CI GitHub sur le commit publié.
+
+## Ajustement du contraste : fond à 58 % et ombres gris doux
+
+Base : commit 6559f660fd00ebdf9cd70bed9817c1042cf86727.
+
+- Le fond ivoire des panneaux illustrés passe de 78 % à 58 % pour laisser davantage apparaître le dégradé. Les textes et les images gardent leur opacité.
+- Les ombres extérieures sont rétablies en gris doux RGB 112, 108, 106, à faible opacité : 12 % et 6 % pour les panneaux, 14 % pour l’en-tête après défilement, 10 % pour les fiches.
+- Le voile du menu reste ivoire grâce à la variable séparée `--studio-ivory-rgb`. Le fond rose poudré–ivoire est conservé.
+
+Vérification locale : compilation, TypeScript et encodage des 76 fichiers réussis ; audit npm sans vulnérabilité ; `git diff --check` sans erreur. Captures examinées à 390 et 1440 px sur le blog et les ateliers, avec défilement et ouverture du menu mobile.
+
+Les styles calculés confirment un fond de panneau à 58 %, une opacité de bloc et d’image de 100 %, des ombres extérieures RGB 112, 108, 106 aux faibles opacités prévues et un voile de menu toujours ivoire. Aucun débordement horizontal constaté. La suite existante de 30 tests est relancée par la CI GitHub sur le commit publié.

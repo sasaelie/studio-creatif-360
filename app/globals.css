@@ -6,10 +6,11 @@
   :root {
     --studio-ivory: #fff8e7;
     --studio-powder-pink: #edc9d4;
-    --studio-shadow-rgb: 255 248 231;
-    --studio-panel-shadow: 0 18px 42px rgb(var(--studio-shadow-rgb) / .7), 0 4px 14px rgb(var(--studio-shadow-rgb) / .5), inset 0 1px 0 #fffdf2;
-    --studio-header-shadow: 0 8px 28px rgb(var(--studio-shadow-rgb) / .8);
-    --studio-paper-shadow: 0 7px 20px rgb(var(--studio-shadow-rgb) / .75);
+    --studio-ivory-rgb: 255 248 231;
+    --studio-shadow-rgb: 112 108 106;
+    --studio-panel-shadow: 0 18px 42px rgb(var(--studio-shadow-rgb) / .12), 0 4px 14px rgb(var(--studio-shadow-rgb) / .06), inset 0 1px 0 #fffdf2;
+    --studio-header-shadow: 0 8px 28px rgb(var(--studio-shadow-rgb) / .14);
+    --studio-paper-shadow: 0 7px 20px rgb(var(--studio-shadow-rgb) / .1);
   }
   body {
     @apply bg-ivoire text-texte-fonce antialiased;

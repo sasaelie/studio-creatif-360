@@ -79,7 +79,8 @@ et les données sont séparées. Les imports CSS sont locaux aux composants.
 Le fond mélange le rose poudré `#edc9d4` et l’ivoire `#fff8e7` dans un dégradé
 diagonal continu. Les couleurs et les ombres sont centralisées dans les variables
 `--studio-*` de `app/globals.css`. Panneaux, en-tête et fiches utilisent des ombres
-ivoire ; le voile du menu ouvert est également ivoire. Le vert foncé sert aux boutons et à certains
+gris doux à faible opacité ; le voile du menu ouvert reste ivoire grâce à une
+variable distincte. Le vert foncé sert aux boutons et à certains
 titres, sans nappe verte dans le décor. La mission et son illustration partagent
 un panneau. L’accueil n’affiche pas le catalogue ou les articles : un accès unique
 conduit à chaque page dédiée, où les entrées sont séparées par de simples lignes.
@@ -90,9 +91,10 @@ navigateurs qui ne prennent pas en charge le flou. Les images originales sont
 affichées entières et ne déclenchent aucune ouverture au clic. Leurs dimensions
 proviennent des imports statiques de `data/illustrations.ts` ; un nouveau visuel
 doit y être enregistré. Les coins des fiches sont arrondis, avec une fine bordure
-ivoire et une ombre ivoire légère. Leur contenu n’a pas été retouché.
+ivoire et une ombre gris doux légère. Leur contenu n’a pas été retouché.
 La typographie manuscrite est réservée aux grands titres. Les pages illustrées
-utilisent un panneau ivoire plus clair et une marge intérieure unique de 16 px.
+utilisent un fond ivoire à 58 % et une marge intérieure unique de 16 px.
+Seule la transparence de ce fond est ajustée : textes et images restent opaques.
 
 `useHeaderHeight` réserve la hauteur réelle de l’en-tête après redimensionnement,
 chargement des polices et changement de taille du texte. Une marge de confort
