@@ -59,20 +59,24 @@ horaires, tarifs et disponibilités gérés dans l’outil de réservation. L’
 grille et le formulaire de demande par e-mail sont supprimés. Les cours en ligne
 conservent leurs présentations et leur contact par e-mail.
 
-`data/booking.ts` centralise le script fourni, l’organisation `moncoutire` et le
+`data/booking.ts` centralise le script fourni, l’organisation `studiocreatif360` et le
 mode `inline`. `useBookingWidget` insère le script dans son conteneur : le code
 fourni dépend de `document.currentScript` pour placer son iframe. Le chargement
 démarre près de la zone visible, et le script conserve le redimensionnement de
 l’iframe. Un message provenant de l’origine et de l’iframe attendues signale
-son affichage. Une erreur ou une absence de réponse affiche une explication,
+son affichage. L’iframe reste visible pendant le chargement : la masquer
+empêcherait le service d’envoyer son premier signal après une animation.
+Une erreur ou une absence de réponse affiche une explication,
 un bouton de nouvel essai et l’adresse de contact. Aucune réservation, place
 disponible ou confirmation n’est inventée côté site.
 
-Au contrôle du 19 novembre 2026, l’URL de recette fournie redirige les visiteurs
-anonymes vers la connexion Vercel (HTTP 302). Le script et `/embed/moncoutire`
-doivent être accessibles publiquement pour valider l’intégration réelle.
-Aucune protection du service externe n’est modifiée dans ce dépôt et aucun
-jeton de contournement n’est ajouté au navigateur.
+Le nouveau script `https://saas-booking-public-test.vercel.app/widget.js?v=3`
+et `/embed/studiocreatif360` répondent publiquement HTTP 200 au contrôle du
+19 novembre 2026. Le service affiche un avertissement de démonstration publique :
+aucune place réelle, aucun paiement ni e-mail. Cette configuration sert à
+vérifier l’intégration ; elle ne constitue pas un service de réservation réel.
+L’ancienne URL de recette demandait une connexion Vercel. Aucune protection du
+service externe n’est modifiée et aucun jeton de contournement n’est ajouté.
 
 ## Organisation
 
@@ -146,8 +150,8 @@ confidentialité doivent rester conformes à ses pratiques réelles.
 Les tests d’intégration utilisent un doublage du script et de l’iframe, isolé
 dans `tests/fixtures/booking-widget.ts`. Ils vérifient le placement, la navigation,
 le redimensionnement, les messages attendus et les erreurs, sans appel d’écriture
-à l’outil. Leur réussite ne vaut pas validation d’une réservation réelle tant
-que l’accès public du service reste bloqué.
+à l’outil. Leur réussite ne vaut pas validation d’une réservation réelle.
+Le contrôle du module public de démonstration est distinct de ces tests simulés.
 
 Les tests nécessitent un build (`npm run check`). En CI, Chromium est installé
 automatiquement. Pour utiliser un navigateur déjà installé, renseigner la variable

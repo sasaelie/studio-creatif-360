@@ -7,8 +7,8 @@ test('le catalogue remplace les horaires et fonctionne après navigation entre l
   await page.goto('/')
   await page.locator('#programme').scrollIntoViewIfNeeded()
   const script = page.locator('#programme script')
-  await expect(script).toHaveAttribute('src', 'https://saas-booking-recette-elis-projects-ddf0bd9d.vercel.app/widget.js?v=3')
-  await expect(script).toHaveAttribute('data-organization', 'moncoutire')
+  await expect(script).toHaveAttribute('src', 'https://saas-booking-public-test.vercel.app/widget.js?v=3')
+  await expect(script).toHaveAttribute('data-organization', 'studiocreatif360')
   await expect(script).toHaveAttribute('data-mode', 'inline')
   await expect(script).toHaveAttribute('defer', '')
   await expect(page.locator('#programme article')).toHaveCount(0)
@@ -62,6 +62,8 @@ test('seul un message valide provenant de l’iframe attendue termine le chargem
   await page.goto('/reservation')
   await expect(page.locator('main iframe')).toHaveCount(1)
   await expect(page.frameLocator('main iframe').locator('body')).toBeAttached()
+  // Le service attend une animation pour annoncer sa taille : son iframe doit rester visible.
+  await expect(page.locator('main iframe')).toBeVisible()
   await page.evaluate(origin => {
     window.dispatchEvent(new MessageEvent('message', { origin, source: window, data: { type: 'booking-widget:resize', height: 640 } }))
   }, booking.origin)
