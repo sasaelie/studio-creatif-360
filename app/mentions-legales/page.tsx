@@ -19,8 +19,8 @@ export default function LegalPage() {
     <h2>Hébergement</h2>
     <p>Ce site est hébergé par Vercel. Les informations sur cet hébergeur sont disponibles sur <a href="https://vercel.com" target="_blank" rel="noopener noreferrer">vercel.com</a>.</p>
     <h2>Informations sur les ateliers et les cours</h2>
-    <p>Les horaires, tarifs et disponibilités présentés sont indicatifs. Une demande envoyée depuis votre messagerie ne vaut pas confirmation de réservation. L’association confirme directement les modalités avant toute inscription ou paiement.</p>
+    <p>Les horaires, tarifs, disponibilités et modalités de réservation sont présentés dans le module dédié. Suivez les étapes et les confirmations de l’outil pour connaître l’état de votre réservation. Un e-mail de renseignements ne vaut pas réservation.</p>
     <h2>Données personnelles</h2>
-    <p>Consultez la <Link href="/rgpd">politique de confidentialité</Link> pour comprendre le fonctionnement de la demande par e-mail.</p>
+    <p>Consultez la <Link href="/rgpd">politique de confidentialité</Link> pour comprendre le traitement des informations communiquées.</p>
   </ContentPage>
 }

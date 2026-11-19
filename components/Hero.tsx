@@ -18,7 +18,7 @@ export default function Hero() {
           <p className={styles.online}>Vous préférez commencer à distance ? <Link href="/cours">Découvrez nos cours de couture en ligne.</Link></p>
           <div className={styles.actions}>
             <Link href={reservationHref} className="button-primary">
-              Demander un atelier
+              Réserver un atelier
             </Link>
             <Link href="#mission" className="button-secondary">
               Découvrir l'ASBL

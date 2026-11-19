@@ -53,14 +53,30 @@ nécessite une configuration et une validation spécifiques des liens et images.
 
 Les pages mission (`/notre-mission`), localisation (`/localisation`), catalogue
 (`/cours`), réservation, blog et informations légales sont implémentées.
-La demande d’atelier prépare un e-mail que le visiteur relit et envoie depuis sa
-messagerie ; aucune place n’est bloquée ni confirmée automatiquement. Les cours
-présentent les thèmes et les tarifs existants, puis proposent de contacter l’ASBL.
-Aucune vidéo payante, aucun compte et aucun paiement ne sont simulés.
-Les quatre créneaux et tarifs d’atelier proviennent des renseignements fournis
-par l’association : 20 € pour les enfants, 30 € pour les adultes. Le site indique
-une capacité de cinq participants, sans inventer de compteur de places restantes.
-La date et la disponibilité doivent être confirmées par l’association.
+La réservation d’atelier est intégrée à la place de l’ancienne grille sur
+l’accueil et sur `/reservation`. Le même module présente les activités,
+horaires, tarifs et disponibilités gérés dans l’outil de réservation. L’ancienne
+grille et le formulaire de demande par e-mail sont supprimés. Les cours en ligne
+conservent leurs présentations et leur contact par e-mail.
+
+`data/booking.ts` centralise le script fourni, l’organisation `studiocreatif360` et le
+mode `inline`. `useBookingWidget` insère le script dans son conteneur : le code
+fourni dépend de `document.currentScript` pour placer son iframe. Le chargement
+démarre près de la zone visible, et le script conserve le redimensionnement de
+l’iframe. Un message provenant de l’origine et de l’iframe attendues signale
+son affichage. L’iframe reste visible pendant le chargement : la masquer
+empêcherait le service d’envoyer son premier signal après une animation.
+Une erreur ou une absence de réponse affiche une explication,
+un bouton de nouvel essai et l’adresse de contact. Aucune réservation, place
+disponible ou confirmation n’est inventée côté site.
+
+Le nouveau script `https://saas-booking-public-test.vercel.app/widget.js?v=3`
+et `/embed/studiocreatif360` répondent publiquement HTTP 200 au contrôle du
+19 novembre 2026. Le service affiche un avertissement de démonstration publique :
+aucune place réelle, aucun paiement ni e-mail. Cette configuration sert à
+vérifier l’intégration ; elle ne constitue pas un service de réservation réel.
+L’ancienne URL de recette demandait une connexion Vercel. Aucune protection du
+service externe n’est modifiée et aucun jeton de contournement n’est ajouté.
 
 ## Organisation
 
@@ -70,8 +86,8 @@ La date et la disponibilité doivent être confirmées par l’association.
 - `components/cards/` : cartes de cours et d'articles.
 - `components/navigation/` : menu mobile avec dialogue natif accessible.
 - `data/` : contenu typé et navigation commune.
-- `hooks/` : logique React de suivi du défilement.
-- `tests/` : tests Playwright des routes, du responsive, du menu et de la demande.
+- `hooks/` : logique React de l’en-tête et du chargement du module de réservation.
+- `tests/` : tests Playwright des routes, du responsive, du menu et du widget.
 - `docs/SUIVI-CORRECTIONS.md` : état de chaque point de la revue.
 
 Les composants gardent le JSX, les fichiers `.module.css` portent leurs styles,
@@ -127,7 +143,15 @@ Les mentions légales indiquent la publication aux Annexes du Moniteur belge du
 21 août 2026, d’après les renseignements fournis. L’association doit maintenir
 ces renseignements à jour et préciser ses
 modalités de conservation des correspondances. Le code n’ajoute pas de traceur
-publicitaire, de stockage des champs ni d’envoi de formulaire côté serveur.
+publicitaire ni de stockage des champs côté vitrine. Le module de réservation
+traite les renseignements dans l’outil externe ; les informations de
+confidentialité doivent rester conformes à ses pratiques réelles.
+
+Les tests d’intégration utilisent un doublage du script et de l’iframe, isolé
+dans `tests/fixtures/booking-widget.ts`. Ils vérifient le placement, la navigation,
+le redimensionnement, les messages attendus et les erreurs, sans appel d’écriture
+à l’outil. Leur réussite ne vaut pas validation d’une réservation réelle.
+Le contrôle du module public de démonstration est distinct de ces tests simulés.
 
 Les tests nécessitent un build (`npm run check`). En CI, Chromium est installé
 automatiquement. Pour utiliser un navigateur déjà installé, renseigner la variable
