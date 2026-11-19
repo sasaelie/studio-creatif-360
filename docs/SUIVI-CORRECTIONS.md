@@ -136,3 +136,19 @@ Vérification locale : `npm run check` réussi (76 fichiers UTF-8, compilation e
 Captures examinées à 390 et 1440 px sur les ateliers et le blog, avec menu mobile ouvert. Les styles calculés confirment des fonds à 24 % et 48 %, un flou de 22 px et une opacité de 100 % des blocs, textes et images. Aucun débordement horizontal constaté.
 
 Contrôle public au moment de cet audit : `https://studio-creatif-360.vercel.app/` répond 200, tandis que `/robots.txt` et `/sitemap.xml` répondent 404. Le déploiement de production READY correspond encore au commit main `b6765374e5025c3641cba12fdd14b973461c173a`, antérieur aux pages et routes SEO préparées. Cette situation doit être recontrôlée après fusion et déploiement de la nouvelle version. Aucun résultat d’indexation Google ni mesure de performances réelles n’est déduit des tests locaux.
+
+## Intégration du module de réservation — 19 novembre 2026
+
+Base : main `a146837a2ad93754e52ad1e0b04781b8fcd26b94`.
+
+- À la demande de l’association, la grille statique est remplacée par le catalogue intégré ; elle n’est pas conservée sous le module. `/reservation` utilise le même composant.
+- Script fourni : `https://saas-booking-recette-elis-projects-ddf0bd9d.vercel.app/widget.js?v=3`, organisation `moncoutire`, mode `inline`. Configuration centralisée dans `data/booking.ts`.
+- Le script est inséré dans le conteneur de réservation, car il place son iframe après `document.currentScript`. Chargement près de la fenêtre, contrôle du message de redimensionnement, gestion des erreurs, délai de réponse et nouvel essai.
+- Retrait de l’ancien formulaire de demande par e-mail et des données d’horaires recopiées. Mission, FAQ, boutons, mentions légales et confidentialité sont adaptés ; le contact par e-mail reste disponible pour les renseignements.
+- Le contrat d’intégration est testé avec des réponses simulées. Aucune réservation ou écriture réelle dans l’outil n’est effectuée pendant ces tests.
+
+Blocage externe confirmé : le script fourni renvoie HTTP 302 vers `vercel.com/sso-api` pour une requête anonyme. Le projet Vercel `saas-booking` protège les déploiements hors domaines personnalisés ; l’alias fourni correspond à une version de recette. La protection du service n’est pas modifiée. L’affichage du vrai catalogue et le parcours de réservation ne sont pas validés tant qu’une URL publique n’est pas disponible.
+
+Vérification locale : `npm run check` réussi (79 fichiers UTF-8, compilation et TypeScript), audit npm sans vulnérabilité et `git diff --check` sans erreur. Suite complète : 42 tests réussis sur mobile, tablette et ordinateur. Après sécurisation du retrait du script en cas de délai dépassé, compilation relancée et 15 tests du widget réussis. Les captures à 390 et 1440 px ont été examinées avec un catalogue simulé ; aucun débordement horizontal constaté. Le message d’erreur et le bouton de nouvel essai ont aussi été examinés sur mobile. Ces vérifications ne valident pas le vrai catalogue ni une réservation réelle.
+
+Cette intégration reste en branche de travail et en proposition de fusion brouillon tant que le blocage d’accès n’est pas résolu ; `main` reste inchangé.
