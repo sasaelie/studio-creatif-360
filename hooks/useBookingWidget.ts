@@ -4,7 +4,7 @@ import { useEffect, useState, type RefObject } from 'react'
 import { booking } from '@/data/booking'
 
 export function useBookingWidget(hostRef: RefObject<HTMLDivElement>) {
-  const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
+  const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading')
   const [attempt, setAttempt] = useState(0)
 
   useEffect(() => {
@@ -31,30 +31,29 @@ export function useBookingWidget(hostRef: RefObject<HTMLDivElement>) {
       setStatus('error')
     }
 
-    function handleMessage(event: MessageEvent<unknown>) {
-      const frame = host!.querySelector('iframe')
-      if (!active || settled || !frame || event.origin !== booking.origin || event.source !== frame.contentWindow) return
-      const data = event.data
-      if (!data || typeof data !== 'object' || !('type' in data) || data.type !== booking.resizeMessageType) return
-      const height = 'height' in data ? data.height : undefined
-      if (typeof height !== 'number' || !Number.isFinite(height) || height < booking.minHeight || height > booking.maxHeight) {
-        console.warn('[useBookingWidget.ts > handleMessage] Hauteur de module invalide ; valeur reçue :', height)
-        return
-      }
-      settled = true
-      window.clearTimeout(timer)
-      setStatus('ready')
-    }
-
     function handleScriptError() { failWidget('Chargement du script de réservation impossible') }
     function handleScriptLoad() {
-      const frame = host!.querySelector('iframe')
-      if (!frame || frame.src !== booking.embedUrl) failWidget('Le script n’a pas créé le module de réservation attendu')
+      if (!active || settled) return
+      const widget = host!.querySelector('[data-booking-widget]')
+      if (!widget?.querySelector('iframe')) {
+        failWidget('Le script n’a pas créé le module de réservation attendu')
+        return
+      }
+      // La v4 initialise ensuite son iframe et gère seule la réponse du calendrier.
+      settled = true
+      window.clearTimeout(timer)
+      setStatus('loaded')
     }
 
     function mountWidget() {
       if (!active || started) return
       started = true
+      const fallback = document.createElement('a')
+      fallback.href = booking.publicUrl
+      fallback.dataset.bookingFallback = ''
+      fallback.target = '_blank'
+      fallback.rel = 'noopener noreferrer'
+      fallback.textContent = booking.fallbackLabel
       script = document.createElement('script')
       script.src = booking.scriptUrl
       script.dataset.organization = booking.organization
@@ -62,13 +61,12 @@ export function useBookingWidget(hostRef: RefObject<HTMLDivElement>) {
       script.defer = true
       script.addEventListener('error', handleScriptError)
       script.addEventListener('load', handleScriptLoad)
-      // Le script utilise document.currentScript pour insérer son iframe juste après lui.
-      host!.append(script)
+      // La v4 reprend le lien précédent et déplace ce nœud dans son propre module.
+      host!.append(fallback, script)
       timer = window.setTimeout(() => failWidget('Le module ne répond pas dans le délai prévu'), booking.loadingTimeoutMs)
     }
 
-    window.addEventListener('message', handleMessage)
-    // Le widget contient une iframe lazy : démarrer près de l’écran évite un faux délai dépassé.
+    // Charger près de la zone visible évite une requête externe inutile en haut de page.
     const observer = typeof IntersectionObserver === 'undefined' ? null : new IntersectionObserver(entries => {
       if (entries.some(entry => entry.isIntersecting)) {
         observer?.disconnect()
@@ -85,7 +83,6 @@ export function useBookingWidget(hostRef: RefObject<HTMLDivElement>) {
       active = false
       observer?.disconnect()
       window.clearTimeout(timer)
-      window.removeEventListener('message', handleMessage)
       script?.removeEventListener('error', handleScriptError)
       script?.removeEventListener('load', handleScriptLoad)
       host.replaceChildren()

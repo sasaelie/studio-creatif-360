@@ -59,24 +59,33 @@ horaires, tarifs et disponibilités gérés dans l’outil de réservation. L’
 grille et le formulaire de demande par e-mail sont supprimés. Les cours en ligne
 conservent leurs présentations et leur contact par e-mail.
 
-`data/booking.ts` centralise le script fourni, l’organisation `studiocreatif360` et le
-mode `inline`. `useBookingWidget` insère le script dans son conteneur : le code
-fourni dépend de `document.currentScript` pour placer son iframe. Le chargement
-démarre près de la zone visible, et le script conserve le redimensionnement de
-l’iframe. Un message provenant de l’origine et de l’iframe attendues signale
-son affichage. L’iframe reste visible pendant le chargement : la masquer
-empêcherait le service d’envoyer son premier signal après une animation.
-Une erreur ou une absence de réponse affiche une explication,
-un bouton de nouvel essai et l’adresse de contact. Aucune réservation, place
-disponible ou confirmation n’est inventée côté site.
+`data/booking.ts` centralise le script v4 fourni, l’organisation `moncoutire`, le
+mode `inline` et l’adresse de secours. Le code d’installation correspondant est :
 
-Le nouveau script `https://saas-booking-public-test.vercel.app/widget.js?v=3`
-et `/embed/studiocreatif360` répondent publiquement HTTP 200 au contrôle du
-19 novembre 2026. Le service affiche un avertissement de démonstration publique :
-aucune place réelle, aucun paiement ni e-mail. Cette configuration sert à
-vérifier l’intégration ; elle ne constitue pas un service de réservation réel.
-L’ancienne URL de recette demandait une connexion Vercel. Aucune protection du
-service externe n’est modifiée et aucun jeton de contournement n’est ajouté.
+```html
+<a href="https://saas-booking-recette-elis-projects-ddf0bd9d.vercel.app/moncoutire" data-booking-fallback target="_blank" rel="noopener noreferrer">Ouvrir la réservation dans une nouvelle fenêtre</a>
+<script src="https://saas-booking-recette-elis-projects-ddf0bd9d.vercel.app/widget.js?v=4" data-organization="moncoutire" data-mode="inline" defer></script>
+```
+
+Dans cette application React, `useBookingWidget` crée le lien immédiatement avant
+le script, dans un conteneur réservé au SDK. Le script dépend de
+`document.currentScript` et reprend le lien précédent pour l’intégrer à son UI.
+Le SDK v4 gère ses propres messages, le redimensionnement, la connexion au
+calendrier, les erreurs et le nouvel essai. Le site attend seulement la création
+du module, sans exiger que l’iframe ait déjà une adresse : la v4 initialise son
+URL ensuite. Aucun masquage CSS de l’iframe n’est ajouté par le site.
+
+Si le script lui-même échoue ou ne crée pas son module, le site propose le lien
+externe, un nouvel essai et le contact. Le lien est aussi rendu sans JavaScript.
+Les nœuds créés par le SDK sont retirés à la navigation ; la v4 dispose alors
+de son propre nettoyage. Aucune réservation ou disponibilité n’est inventée.
+
+Au contrôle du 22 novembre 2026, le script v4, `/moncoutire` et
+`/embed/moncoutire` redirigent les requêtes anonymes vers la connexion Vercel
+(HTTP 302). Le lien de secours est intégré mais soumis à la même restriction.
+L’intégration est préparée dans la branche ; le fonctionnement réel du service
+n’est pas validé dans cet état. Aucune protection du service externe n’est
+modifiée et aucun jeton de contournement n’est ajouté.
 
 ## Organisation
 
@@ -148,10 +157,11 @@ traite les renseignements dans l’outil externe ; les informations de
 confidentialité doivent rester conformes à ses pratiques réelles.
 
 Les tests d’intégration utilisent un doublage du script et de l’iframe, isolé
-dans `tests/fixtures/booking-widget.ts`. Ils vérifient le placement, la navigation,
-le redimensionnement, les messages attendus et les erreurs, sans appel d’écriture
-à l’outil. Leur réussite ne vaut pas validation d’une réservation réelle.
-Le contrôle du module public de démonstration est distinct de ces tests simulés.
+dans `tests/fixtures/booking-widget.ts`. Ils vérifient l’ordre lien/script, la
+navigation, le chargement du script, ses erreurs et l’accès sans JavaScript,
+sans appel d’écriture à l’outil. Leur réussite ne vaut pas validation d’une
+réservation réelle. Les contrôles du service réel sont consignés dans le suivi
+des corrections et restent distincts de ces tests simulés.
 
 Les tests nécessitent un build (`npm run check`). En CI, Chromium est installé
 automatiquement. Pour utiliser un navigateur déjà installé, renseigner la variable

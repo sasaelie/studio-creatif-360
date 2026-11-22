@@ -7,14 +7,17 @@ test('le catalogue remplace les horaires et fonctionne après navigation entre l
   await page.goto('/')
   await page.locator('#programme').scrollIntoViewIfNeeded()
   const script = page.locator('#programme script')
-  await expect(script).toHaveAttribute('src', 'https://saas-booking-public-test.vercel.app/widget.js?v=3')
-  await expect(script).toHaveAttribute('data-organization', 'studiocreatif360')
+  await expect(script).toHaveAttribute('src', 'https://saas-booking-recette-elis-projects-ddf0bd9d.vercel.app/widget.js?v=4')
+  await expect(script).toHaveAttribute('data-organization', 'moncoutire')
   await expect(script).toHaveAttribute('data-mode', 'inline')
   await expect(script).toHaveAttribute('defer', '')
   await expect(page.locator('#programme article')).toHaveCount(0)
   await expect(page.locator('#programme')).not.toContainText('Mercredi')
   const frame = page.frameLocator('#programme iframe')
   await expect(frame.getByRole('heading', { name: 'Choisissez un atelier' })).toBeVisible()
+  await expect(page.locator('#programme a[data-booking-fallback]')).toHaveAttribute('href', 'https://saas-booking-recette-elis-projects-ddf0bd9d.vercel.app/moncoutire')
+  await expect(page.locator('#programme a[data-booking-fallback]')).toHaveAttribute('target', '_blank')
+  await expect(page.locator('#programme a[data-booking-fallback]')).toHaveAttribute('rel', 'noopener noreferrer')
   await frame.getByRole('button', { name: 'Choisir une séance' }).click()
   await expect(frame.getByText('Choisissez votre date.')).toBeVisible()
   await expect.poll(() => page.locator('#programme iframe').evaluate(element => element.getBoundingClientRect().height)).toBe(900)
@@ -39,40 +42,55 @@ test('une erreur de chargement est expliquée et un nouvel essai recharge le mod
   await page.goto('/reservation')
   await expect(page.locator('main').getByRole('alert')).toContainText('indisponible')
   await expect(page.locator('main iframe')).toHaveCount(0)
+  await expect(page.locator('main').getByRole('link', { name: booking.fallbackLabel })).toHaveAttribute('href', booking.publicUrl)
   expect(errors.some(message => message.includes('[useBookingWidget.ts > failWidget]'))).toBe(true)
   await page.getByRole('button', { name: 'Réessayer', exact: true }).click()
   await expect(page.frameLocator('main iframe').getByRole('heading', { name: 'Choisissez un atelier' })).toBeVisible()
   await expect(page.locator('main').getByRole('alert')).toHaveCount(0)
   await expect(page.locator('main iframe')).toHaveCount(1)
+  await expect(page.locator('main a[data-booking-fallback]')).toHaveCount(1)
 })
 
-test('une iframe sans réponse ne reste pas en chargement indéfini', async ({ page }) => {
+test('un script sans réponse ne reste pas en chargement indéfini', async ({ page }) => {
   await page.clock.install()
-  await installBookingWidgetMock(page, false)
+  let release!: () => void
+  const pendingResponse = new Promise<void>(resolve => { release = resolve })
+  await page.route(booking.scriptUrl, async route => { await pendingResponse; await route.abort() })
+  try {
+    await page.goto('/reservation', { waitUntil: 'domcontentloaded' })
+    await expect(page.locator('main script[src]')).toHaveCount(1)
+    await page.clock.fastForward(booking.loadingTimeoutMs + 1000)
+    await expect(page.locator('main').getByRole('alert')).toContainText('indisponible')
+    await expect(page.locator('main iframe')).toHaveCount(0)
+    await expect(page.locator('main script[src]')).toHaveCount(0)
+    await expect(page.locator('main').getByRole('link', { name: booking.fallbackLabel })).toBeVisible()
+  } finally {
+    release()
+    await page.unrouteAll({ behavior: 'wait' })
+  }
+})
+
+test('un script chargé sans module conserve une sortie accessible', async ({ page }) => {
+  await page.route(booking.scriptUrl, route => route.fulfill({ contentType: 'application/javascript', body: 'void 0;' }))
   await page.goto('/reservation')
-  await expect(page.locator('main iframe')).toHaveCount(1)
-  await page.clock.fastForward(booking.loadingTimeoutMs + 1000)
   await expect(page.locator('main').getByRole('alert')).toContainText('indisponible')
-  await expect(page.locator('main iframe')).toHaveCount(0)
+  await expect(page.locator('main').getByRole('link', { name: booking.fallbackLabel })).toBeVisible()
   await expect(page.locator('main script[src]')).toHaveCount(0)
 })
 
-test('seul un message valide provenant de l’iframe attendue termine le chargement', async ({ page }) => {
-  await installBookingWidgetMock(page, false)
-  await page.goto('/reservation')
-  await expect(page.locator('main iframe')).toHaveCount(1)
-  await expect(page.frameLocator('main iframe').locator('body')).toBeAttached()
-  // Le service attend une animation pour annoncer sa taille : son iframe doit rester visible.
-  await expect(page.locator('main iframe')).toBeVisible()
-  await page.evaluate(origin => {
-    window.dispatchEvent(new MessageEvent('message', { origin, source: window, data: { type: 'booking-widget:resize', height: 640 } }))
-  }, booking.origin)
-  await expect(page.getByRole('status')).toContainText('Chargement')
-  await page.frameLocator('main iframe').locator('body').evaluate(() => parent.postMessage({ type: 'booking-widget:resize', height: -1 }, '*'))
-  await expect(page.getByRole('status')).toContainText('Chargement')
-  await page.frameLocator('main iframe').locator('body').evaluate(() => parent.postMessage({ type: 'booking-widget:resize', height: 640 }, '*'))
-  await expect(page.getByRole('status')).toHaveCount(0)
-  await expect(page.locator('main iframe')).toBeVisible()
+test('sans JavaScript le lien de réservation reste disponible', async ({ browser, baseURL }) => {
+  const page = await browser.newPage({ javaScriptEnabled: false, baseURL })
+  try {
+    await page.goto('/reservation')
+    const fallback = page.locator('main').getByRole('link', { name: booking.fallbackLabel })
+    await expect(fallback).toBeVisible()
+    await expect(fallback).toHaveAttribute('href', booking.publicUrl)
+    await expect(fallback).toHaveAttribute('target', '_blank')
+    await expect(fallback).toHaveAttribute('rel', 'noopener noreferrer')
+    await expect(page.locator('main iframe')).toHaveCount(0)
+  } finally {
+    await page.close()
+  }
 })
 
 test('le conteneur du module reste accessible sans débordement sur petit et grand écran', async ({ page }) => {
