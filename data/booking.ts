@@ -1,4 +1,4 @@
-const scriptUrl = 'https://saas-booking-recette-elis-projects-ddf0bd9d.vercel.app/widget.js?v=4'
+const scriptUrl = 'https://saas-booking-public-test.vercel.app/widget.js?v=4'
 const organization = 'moncoutire'
 const origin = new URL(scriptUrl).origin
 

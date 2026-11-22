@@ -63,8 +63,8 @@ conservent leurs présentations et leur contact par e-mail.
 mode `inline` et l’adresse de secours. Le code d’installation correspondant est :
 
 ```html
-<a href="https://saas-booking-recette-elis-projects-ddf0bd9d.vercel.app/moncoutire" data-booking-fallback target="_blank" rel="noopener noreferrer">Ouvrir la réservation dans une nouvelle fenêtre</a>
-<script src="https://saas-booking-recette-elis-projects-ddf0bd9d.vercel.app/widget.js?v=4" data-organization="moncoutire" data-mode="inline" defer></script>
+<a href="https://saas-booking-public-test.vercel.app/moncoutire" data-booking-fallback target="_blank" rel="noopener noreferrer">Ouvrir la réservation dans une nouvelle fenêtre</a>
+<script src="https://saas-booking-public-test.vercel.app/widget.js?v=4" data-organization="moncoutire" data-mode="inline" defer></script>
 ```
 
 Dans cette application React, `useBookingWidget` crée le lien immédiatement avant
@@ -80,12 +80,13 @@ externe, un nouvel essai et le contact. Le lien est aussi rendu sans JavaScript.
 Les nœuds créés par le SDK sont retirés à la navigation ; la v4 dispose alors
 de son propre nettoyage. Aucune réservation ou disponibilité n’est inventée.
 
+Le dernier code fourni utilise le domaine `saas-booking-public-test.vercel.app`.
 Au contrôle du 22 novembre 2026, le script v4, `/moncoutire` et
-`/embed/moncoutire` redirigent les requêtes anonymes vers la connexion Vercel
-(HTTP 302). Le lien de secours est intégré mais soumis à la même restriction.
-L’intégration est préparée dans la branche ; le fonctionnement réel du service
-n’est pas validé dans cet état. Aucune protection du service externe n’est
-modifiée et aucun jeton de contournement n’est ajouté.
+`/embed/moncoutire` y répondent HTTP 200 sans connexion Vercel. L’ancien domaine
+de recette demandait une connexion. Le service public affiche une mention de
+démonstration TEST : aucune place réelle, aucun paiement ni e-mail. Les contrôles
+portent sur l’intégration, sans création de réservation. Aucun réglage de l’outil
+ni aucune protection du service externe n’est modifié.
 
 ## Organisation
 
