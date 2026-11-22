@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import ContentPage from '@/components/ui/ContentPage'
 import { about } from '@/data/about'
-import { programs } from '@/data/programs'
 import { site } from '@/data/site'
 
 export const metadata = {
@@ -19,9 +18,8 @@ export default function MissionPage() {
     <h2>Une pédagogie par projet</h2>
     <p>{about.pedagogy}</p>
     <h2>Horaires et tarifs des cours de couture à Seraing</h2>
-    <p>{site.groupCapacity} participants maximum par séance. Les tarifs ci-dessous sont par séance.</p>
-    <ul>{programs.map(program => <li key={program.id}><strong>{program.day}, {program.schedule}</strong> : {program.audience.toLowerCase()}, {program.price} €.</li>)}</ul>
-    <Link href="/reservation" className="button-primary">Demander une place à l’atelier</Link>
+    <p>Les horaires, tarifs et disponibilités de chaque atelier sont présentés dans le module de réservation.</p>
+    <Link href="/reservation" className="button-primary">Choisir un atelier et réserver</Link>
     <h2>Cours de couture en ligne</h2>
     <p>{about.online}</p>
     <p><Link href="/cours">Découvrir les cours en ligne et demander les modalités.</Link></p>

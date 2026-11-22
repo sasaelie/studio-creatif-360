@@ -1,0 +1,7 @@
+.widget { min-width: 0; width: 100%; }
+.host { min-width: 0; width: 100%; }
+.host iframe { display: block; width: 100%; max-width: 100%; border: 0; }
+.host[data-status='loading'] { min-height: 20rem; }
+.notice { padding: 1.25rem; color: #43524a; }
+.notice > * + * { margin-top: 1rem; }
+.notice a { text-decoration: underline; text-underline-offset: .2em; overflow-wrap: anywhere; }

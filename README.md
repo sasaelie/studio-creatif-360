@@ -53,14 +53,40 @@ nécessite une configuration et une validation spécifiques des liens et images.
 
 Les pages mission (`/notre-mission`), localisation (`/localisation`), catalogue
 (`/cours`), réservation, blog et informations légales sont implémentées.
-La demande d’atelier prépare un e-mail que le visiteur relit et envoie depuis sa
-messagerie ; aucune place n’est bloquée ni confirmée automatiquement. Les cours
-présentent les thèmes et les tarifs existants, puis proposent de contacter l’ASBL.
-Aucune vidéo payante, aucun compte et aucun paiement ne sont simulés.
-Les quatre créneaux et tarifs d’atelier proviennent des renseignements fournis
-par l’association : 20 € pour les enfants, 30 € pour les adultes. Le site indique
-une capacité de cinq participants, sans inventer de compteur de places restantes.
-La date et la disponibilité doivent être confirmées par l’association.
+La réservation d’atelier est intégrée à la place de l’ancienne grille sur
+l’accueil et sur `/reservation`. Le même module présente les activités,
+horaires, tarifs et disponibilités gérés dans l’outil de réservation. L’ancienne
+grille et le formulaire de demande par e-mail sont supprimés. Les cours en ligne
+conservent leurs présentations et leur contact par e-mail.
+
+`data/booking.ts` centralise le script v4 fourni, l’organisation `moncoutire`, le
+mode `inline` et l’adresse de secours. Le code d’installation correspondant est :
+
+```html
+<a href="https://saas-booking-public-test.vercel.app/moncoutire" data-booking-fallback target="_blank" rel="noopener noreferrer">Ouvrir la réservation dans une nouvelle fenêtre</a>
+<script src="https://saas-booking-public-test.vercel.app/widget.js?v=4" data-organization="moncoutire" data-mode="inline" defer></script>
+```
+
+Dans cette application React, `useBookingWidget` crée le lien immédiatement avant
+le script, dans un conteneur réservé au SDK. Le script dépend de
+`document.currentScript` et reprend le lien précédent pour l’intégrer à son UI.
+Le SDK v4 gère ses propres messages, le redimensionnement, la connexion au
+calendrier, les erreurs et le nouvel essai. Le site attend seulement la création
+du module, sans exiger que l’iframe ait déjà une adresse : la v4 initialise son
+URL ensuite. Aucun masquage CSS de l’iframe n’est ajouté par le site.
+
+Si le script lui-même échoue ou ne crée pas son module, le site propose le lien
+externe, un nouvel essai et le contact. Le lien est aussi rendu sans JavaScript.
+Les nœuds créés par le SDK sont retirés à la navigation ; la v4 dispose alors
+de son propre nettoyage. Aucune réservation ou disponibilité n’est inventée.
+
+Le dernier code fourni utilise le domaine `saas-booking-public-test.vercel.app`.
+Au contrôle du 22 novembre 2026, le script v4, `/moncoutire` et
+`/embed/moncoutire` y répondent HTTP 200 sans connexion Vercel. L’ancien domaine
+de recette demandait une connexion. Le service public affiche une mention de
+démonstration TEST : aucune place réelle, aucun paiement ni e-mail. Les contrôles
+portent sur l’intégration, sans création de réservation. Aucun réglage de l’outil
+ni aucune protection du service externe n’est modifié.
 
 ## Organisation
 
@@ -70,8 +96,8 @@ La date et la disponibilité doivent être confirmées par l’association.
 - `components/cards/` : cartes de cours et d'articles.
 - `components/navigation/` : menu mobile avec dialogue natif accessible.
 - `data/` : contenu typé et navigation commune.
-- `hooks/` : logique React de suivi du défilement.
-- `tests/` : tests Playwright des routes, du responsive, du menu et de la demande.
+- `hooks/` : logique React de l’en-tête et du chargement du module de réservation.
+- `tests/` : tests Playwright des routes, du responsive, du menu et du widget.
 - `docs/SUIVI-CORRECTIONS.md` : état de chaque point de la revue.
 
 Les composants gardent le JSX, les fichiers `.module.css` portent leurs styles,
@@ -127,7 +153,16 @@ Les mentions légales indiquent la publication aux Annexes du Moniteur belge du
 21 août 2026, d’après les renseignements fournis. L’association doit maintenir
 ces renseignements à jour et préciser ses
 modalités de conservation des correspondances. Le code n’ajoute pas de traceur
-publicitaire, de stockage des champs ni d’envoi de formulaire côté serveur.
+publicitaire ni de stockage des champs côté vitrine. Le module de réservation
+traite les renseignements dans l’outil externe ; les informations de
+confidentialité doivent rester conformes à ses pratiques réelles.
+
+Les tests d’intégration utilisent un doublage du script et de l’iframe, isolé
+dans `tests/fixtures/booking-widget.ts`. Ils vérifient l’ordre lien/script, la
+navigation, le chargement du script, ses erreurs et l’accès sans JavaScript,
+sans appel d’écriture à l’outil. Leur réussite ne vaut pas validation d’une
+réservation réelle. Les contrôles du service réel sont consignés dans le suivi
+des corrections et restent distincts de ces tests simulés.
 
 Les tests nécessitent un build (`npm run check`). En CI, Chromium est installé
 automatiquement. Pour utiliser un navigateur déjà installé, renseigner la variable

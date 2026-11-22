@@ -1,19 +1,14 @@
 import Link from 'next/link'
 import ContentPage from '@/components/ui/ContentPage'
-import ReservationRequestForm from '@/components/reservation/ReservationRequestForm'
-import { programs } from '@/data/programs'
+import BookingWidget from '@/components/reservation/BookingWidget'
 import { site } from '@/data/site'
 
-export const metadata = { title: 'Demander un cours de couture à Seraing', description: 'Préparez votre demande par e-mail pour un cours de couture débutant à Seraing : enfants et adultes, 5 participants maximum par séance.', alternates: { canonical: '/reservation' } }
+export const metadata = { title: 'Réserver un cours de couture à Seraing', description: 'Consultez les ateliers de couture de StudioCreatif360 à Seraing, choisissez une séance et suivez les étapes de réservation dans le module intégré.', alternates: { canonical: '/reservation' } }
 
-export default async function ReservationPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
-  const query = await searchParams
-  const initialProgram = typeof query.atelier === 'string' && programs.some(program => program.id === query.atelier) ? query.atelier : 'conseil'
-  return <ContentPage title="Préparons votre prochain atelier" description="Une question, un projet, une envie de commencer ? Écrivons la suite ensemble." backHref="/#programme" backLabel="Retour aux ateliers">
-    <h2>Une demande, puis un échange</h2>
-    <p>Choisissez un créneau et présentez-nous votre projet. L’association vous répondra pour confirmer les places disponibles, la date et les modalités pratiques. Aucun paiement n’est demandé sur ce site.</p>
-    <ReservationRequestForm initialProgram={initialProgram} />
-    <h2>Vous préférez nous écrire directement ?</h2>
+export default function ReservationPage() {
+  return <ContentPage title="Réservez votre prochain atelier" description="Choisissez votre activité, consultez les disponibilités et suivez les étapes de réservation." backHref="/#programme" backLabel="Retour aux ateliers">
+    <BookingWidget />
+    <h2>Une question avant de réserver ?</h2>
     <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
     <p>Consultez notre <Link href="/rgpd">politique de confidentialité</Link> avant de nous transmettre des informations personnelles.</p>
   </ContentPage>

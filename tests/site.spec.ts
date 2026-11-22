@@ -1,4 +1,7 @@
 import { test, expect } from '@playwright/test'
+import { installBookingWidgetMock } from './fixtures/booking-widget'
+
+test.beforeEach(async ({ page }) => { await installBookingWidgetMock(page) })
 
 const paths = ['/', '/notre-mission', '/localisation', '/reservation', '/cours', '/cours/machine', '/cours/tissu', '/cours/patron', '/blog', '/blog/chouchou', '/blog/materiel', '/mentions-legales', '/rgpd']
 const corruptedText = /\u00C3[\u0080-\u00BF]|\u00C2[\u0080-\u00BF]|\u00E2[\u0080-\u00BF\u20AC\u2010-\u2027]|\uFFFD/
@@ -61,31 +64,9 @@ test('navigation mobile, clavier, ancres et menu paysage', async ({ page }) => {
   await page.keyboard.press('Escape')
 })
 
-test('une demande sélectionne le bon atelier et prépare un e-mail sans confirmation fictive', async ({ page }) => {
-  await page.goto('/reservation?atelier=samedi-adultes')
-  await expect(page.getByLabel('Atelier souhaité')).toHaveValue('samedi-adultes')
-  await page.getByLabel('Votre nom', { exact: true }).fill('Alice Exemple')
-  await page.getByLabel('Votre adresse e-mail').fill('alice@example.org')
-  await page.getByLabel('Votre message').fill('Je souhaite découvrir la couture.')
-  await page.getByRole('button', { name: 'Préparer ma demande' }).click()
-  const link = page.getByRole('link', { name: 'Ouvrir ma messagerie' })
-  const href = await link.getAttribute('href')
-  expect(href).toMatch(/^mailto:contact@studiocreatif360.be\?/)
-  expect(decodeURIComponent(href!)).toContain('Samedi — Adultes')
-  expect(decodeURIComponent(href!)).toContain('Alice Exemple')
-  await expect(page.getByRole('status')).toContainText('prête')
-  await page.getByLabel('Votre nom', { exact: true }).fill('Autre personne')
-  await expect(link).toHaveCount(0)
-  await page.getByLabel('Votre nom', { exact: true }).fill('   ')
-  await page.getByRole('button', { name: 'Préparer ma demande' }).click()
-  await expect(page.locator('form').getByRole('alert')).toContainText('Vérifiez')
-  await page.goto('/reservation?atelier=inconnu')
-  await expect(page.getByLabel('Atelier souhaité')).toHaveValue('conseil')
-})
-
 test('les cartes et les panneaux utilisent un verre dépoli cohérent', async ({ page }) => {
   await page.goto('/')
-  for (const selector of ['body > header', '#mission > div > div', '#programme article', '#cours > div > div', '#blog > div > div', 'footer > div']) {
+  for (const selector of ['body > header', '#mission > div > div', '#cours > div > div', '#blog > div > div', 'footer > div']) {
     const style = await page.locator(selector).first().evaluate(element => {
       const computed = getComputedStyle(element)
       return { background: computed.backgroundColor, blur: computed.backdropFilter, shadow: computed.boxShadow }
@@ -187,19 +168,10 @@ test('le retour reste sous le menu, même avec le texte agrandi sur petit écran
 
 test('les informations confirmées sont cohérentes entre les horaires, la FAQ et les pages', async ({ page }) => {
   await page.goto('/')
-  const sessions = page.locator('#programme article')
-  await expect(sessions).toHaveCount(4)
-  await expect(sessions.filter({ hasText: 'Enfants' })).toHaveCount(2)
-  await expect(sessions.filter({ hasText: 'Adultes' })).toHaveCount(2)
-  for (const session of await sessions.all()) {
-    const text = await session.innerText()
-    expect(text).toContain(text.includes('Enfants') ? '20 €' : '30 €')
-    expect(text).toContain('5 participants')
-    expect(text).not.toMatch(/places?\s+sur/)
-  }
-  await expect(page.locator('#programme')).not.toContainText('Vendredi')
+  await expect(page.locator('#programme article')).toHaveCount(0)
+  await expect(page.locator('#programme')).not.toContainText('Mercredi')
   await page.getByText('Combien coûte un cours de couture ?', { exact: true }).click()
-  await expect(page.locator('#questions details[open]')).toContainText('30 €')
+  await expect(page.locator('#questions details[open]')).toContainText('module de réservation')
   await page.goto('/notre-mission')
   await expect(page.locator('main')).toContainText('Alyssia Wilkins')
   await expect(page.locator('main')).toContainText('trois générations')
@@ -213,8 +185,8 @@ test('les informations confirmées sont cohérentes entre les horaires, la FAQ e
   await page.goto('/mentions-legales')
   await expect(page.locator('main')).toContainText('21 août 2026')
   await page.goto('/reservation?atelier=vendredi-enfants')
-  await expect(page.getByLabel('Atelier souhaité')).toHaveValue('conseil')
-  await expect(page.getByLabel('Atelier souhaité').locator('option')).toHaveCount(5)
+  await expect(page.frameLocator('main iframe').getByRole('heading', { name: 'Choisissez un atelier' })).toBeVisible()
+  await expect(page.locator('main form')).toHaveCount(0)
 })
 
 test('les pages dédiées ont leurs métadonnées et une localisation structurée cohérente', async ({ page, request }) => {
@@ -234,7 +206,9 @@ test('les pages dédiées ont leurs métadonnées et une localisation structuré
     await expect(canonical).toHaveCount(1)
     expect(new URL((await canonical.getAttribute('href'))!).href).toBe(new URL(path, 'https://studio-creatif-360.vercel.app').href)
     expect(sitemap).toContain('https://studio-creatif-360.vercel.app' + path)
-    const organization = JSON.parse(await page.locator('script[type="application/ld+json"]').innerText())
+    const organizationScript = page.locator('script[type="application/ld+json"]')
+    await expect(organizationScript).toHaveCount(1)
+    const organization = JSON.parse(await organizationScript.innerText())
     expect(organization.name).toBe('StudioCreatif360 ASBL')
     expect(organization.address.streetAddress).toBe('Rue Sous les Vignes 8, boîte 1')
     expect(organization.address.postalCode).toBe('4100')
